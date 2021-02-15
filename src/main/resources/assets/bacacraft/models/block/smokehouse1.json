@@ -1,0 +1,9 @@
+{
+    "parent": "minecraft:block/orientable",
+    "textures": {
+        "up": "bacacraft:blocks/smokehouse_top",
+        "down": "bacacraft:blocks/smokehouse_bottom",
+        "front": "bacacraft:blocks/smokehouse_front",
+        "side": "bacacraft:blocks/smokehouse_side"
+    }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "listAllmilk"
+    },
+    {
+      "item": "bacacraft:mountain_cheese_form"
+    }
+  ],
+  "result": {
+    "item": "bacacraft:mountain_cheese"
+  }
+}

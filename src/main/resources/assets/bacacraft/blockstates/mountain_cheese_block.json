@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "bacacraft:mountain_cheese_block" },
+    "axis=z": { "model": "bacacraft:mountain_cheese_block", "x": 90 },
+    "axis=x": { "model": "bacacraft:mountain_cheese_block", "x": 90, "y": 90 }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "bacacraft:blocks/mountain_cheese_block_top",
+    "side": "bacacraft:blocks/mountain_cheese_block"
+  }
+}

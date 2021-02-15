@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "OPO",
+    "OOO"
+  ],
+  "key": {
+    "P": {
+      "type": "forge:ore_dict",
+      "ore": "plankWood"
+    },
+    "O": {
+      "item": "bacacraft:mountain_cheese"
+    }
+  },
+  "result": {
+    "item": "bacacraft:mountain_cheese_block"
+  }
+}

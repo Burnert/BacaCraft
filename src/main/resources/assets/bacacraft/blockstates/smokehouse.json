@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "burning=false,facing=north": { "model": "bacacraft:smokehouse" },
+        "burning=false,facing=south": { "model": "bacacraft:smokehouse", "y": 180 },
+        "burning=false,facing=west":  { "model": "bacacraft:smokehouse", "y": 270 },
+        "burning=false,facing=east":  { "model": "bacacraft:smokehouse", "y": 90  },
+        "burning=true,facing=north":  { "model": "bacacraft:smokehouse" },
+        "burning=true,facing=south":  { "model": "bacacraft:smokehouse", "y": 180 },
+        "burning=true,facing=west":   { "model": "bacacraft:smokehouse", "y": 270 },
+        "burning=true,facing=east":   { "model": "bacacraft:smokehouse", "y": 90  }
+    }
+}

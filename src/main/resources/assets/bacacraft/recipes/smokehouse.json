@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PSP",
+    "P P",
+    "LCL"
+  ],
+  "key": {
+    "P": {
+      "type": "forge:ore_dict",
+      "ore": "plankWood"
+    },
+    "S": {
+      "type": "forge:ore_dict",
+      "ore": "stickWood"
+    },
+    "L": {
+      "type": "forge:ore_dict",
+      "ore": "logWood"
+    },
+    "C": {
+      "type": "forge:ore_dict",
+      "ore": "cobblestone"
+    }
+  },
+  "result": {
+    "item": "bacacraft:smokehouse"
+  }
+}

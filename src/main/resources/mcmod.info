@@ -1,0 +1,16 @@
+[
+{
+  "modid": "bacacraft",
+  "name": "BacaCraft",
+  "description": "A great way to start your Baca career.",
+  "version": "0.1-Alpha",
+  "mcversion": "1.12.2",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Burnert"],
+  "credits": "Thanks to Alkatranz for all the great knowledge.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

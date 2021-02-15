@@ -1,0 +1,12 @@
+item.bacacraft.mountain_cheese.name=Mountain Cheese
+item.bacacraft.mountain_cheese_smoked.name=Smoked Mountain Cheese
+item.bacacraft.mountain_cheese_oversmoked.name=Oversmoked Mountain Cheese
+item.bacacraft.mountain_cheese_form.name=Mountain Cheese Form
+item.bacacraft.mountain_cheese_devitem.name=BacaCraft Oscypek Deweloperski
+
+tile.bacacraft.mountain_cheese_block.name=Mountain Cheese Block
+tile.bacacraft.smokehouse.name=Smokehouse
+
+container.bacacraft.smokehouse=Smokehouse
+
+itemGroup.bacacraft=BacaCraft
