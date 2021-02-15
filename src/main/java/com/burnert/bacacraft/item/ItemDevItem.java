@@ -1,9 +1,12 @@
 package com.burnert.bacacraft.item;
 
+import com.burnert.bacacraft.core.BacaCraftCreativeTabs;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityLockableLoot;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -14,11 +17,21 @@ public class ItemDevItem extends AbstractItemBase {
 	public ItemDevItem() {
 		super("mountain_cheese_devitem");
 		this.setHasSubtypes(true);
+		this.setCreativeTab(BacaCraftCreativeTabs.MAIN);
 	}
 
 	@Override
 	protected int[] getAvailableSubtypeMetadata() {
 		return new int[]{ 0, 1, 2 };
+	}
+
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		if (this.isInCreativeTab(tab)) {
+			items.add(new ItemStack(this));
+			items.add(new ItemStack(this, 1, 1));
+			items.add(new ItemStack(this, 1, 2));
+		}
 	}
 
 	public static void useItemOnWorld(World worldIn, BlockPos blockPos, EntityPlayer player, ItemStack itemStack) {
