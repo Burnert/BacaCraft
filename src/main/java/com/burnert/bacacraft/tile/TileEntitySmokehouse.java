@@ -355,7 +355,7 @@ public class TileEntitySmokehouse extends TileEntity implements ITickable, ISide
 
 	public int getSmokeTime(ItemStack stack) {
 		if (stack.getItem().equals(BacaCraftItemRegistry.MOUNTAIN_CHEESE)) {
-			return 200;
+			return 4000;
 		}
 		else {
 			return 0;
