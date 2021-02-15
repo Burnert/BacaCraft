@@ -5,6 +5,7 @@ import com.burnert.bacacraft.core.BacaCraftBlockRegistry;
 import com.burnert.bacacraft.core.BacaCraftCreativeTabs;
 import com.burnert.bacacraft.core.config.BacaCraftReference;
 import com.burnert.bacacraft.tile.TileEntitySmokehouse;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -59,7 +60,7 @@ public class BlockSmokehouse extends BlockBase implements ITileEntityProvider {
 
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return SMOKEHOUSE_AABB;
+		return Block.FULL_BLOCK_AABB;
 	}
 
 	@Override
@@ -76,7 +77,7 @@ public class BlockSmokehouse extends BlockBase implements ITileEntityProvider {
 		if (stateIn.getValue(BURNING) && !isBlockTopObstructed(worldIn, pos)) {
 //			EnumFacing enumfacing = (EnumFacing)stateIn.getValue(FACING);
 			double x = (double)pos.getX() + 0.4D + rand.nextDouble() * 0.2D;
-			double y = (double)(pos.getY() + 2);
+			double y = (double)(pos.getY() + 1);
 			double z = (double)pos.getZ() + 0.4D + rand.nextDouble() * 0.2D;
 			double ySpeed = 0.02D + rand.nextDouble() * 0.06D;
 //			double d3 = 0.52D;
