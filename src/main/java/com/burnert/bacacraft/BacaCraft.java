@@ -1,9 +1,8 @@
 package com.burnert.bacacraft;
 
-import com.burnert.bacacraft.core.config.BacaCraftReference;
 import com.burnert.bacacraft.core.proxy.CommonProxy;
-import com.burnert.bacacraft.core.BacaCraftTERegistry;
-import com.burnert.bacacraft.util.GuiHandler;
+import com.burnert.bacacraft.core.registry.BacaCraftTERegistry;
+import com.burnert.bacacraft.core.util.GuiHandler;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
@@ -19,21 +18,30 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 @Mod(
-		modid = BacaCraftReference.MOD_ID,
-		name = BacaCraftReference.NAME,
-		version = BacaCraftReference.VERSION,
-		acceptedMinecraftVersions = BacaCraftReference.ACCEPTED_VERSIONS)
+		modid = BacaCraft.MOD_ID,
+		name = BacaCraft.NAME,
+		version = BacaCraft.VERSION,
+		acceptedMinecraftVersions = BacaCraft.ACCEPTED_VERSIONS)
 public class BacaCraft {
+	public static final String MOD_ID = "bacacraft";
+	public static final String NAME = "BacaCraft";
+	public static final String VERSION = "0.1-Alpha";
+	public static final String ACCEPTED_VERSIONS = "[1.12.2]";
+
+	public static final String CLIENT_PROXY_CLASS = "com.burnert.bacacraft.core.proxy.ClientProxy";
+	public static final String COMMON_PROXY_CLASS = "com.burnert.bacacraft.core.proxy.CommonProxy";
+	public static final int GUI_SMOKEHOUSE = 0;
+
 	// Directly reference a log4j logger.
 	public static final Logger LOGGER = LogManager.getLogger();
 
-	@Mod.Instance(BacaCraftReference.MOD_ID)
+	@Mod.Instance(BacaCraft.MOD_ID)
 	public static BacaCraft instance;
 
 	public BacaCraft() {
 	}
 
-	@SidedProxy(clientSide = BacaCraftReference.CLIENT_PROXY_CLASS, serverSide = BacaCraftReference.COMMON_PROXY_CLASS)
+	@SidedProxy(clientSide = BacaCraft.CLIENT_PROXY_CLASS, serverSide = BacaCraft.COMMON_PROXY_CLASS)
 	public static CommonProxy proxy;
 
 	@Mod.EventHandler

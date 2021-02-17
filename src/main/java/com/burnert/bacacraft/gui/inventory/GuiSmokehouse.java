@@ -1,6 +1,6 @@
 package com.burnert.bacacraft.gui.inventory;
 
-import com.burnert.bacacraft.core.config.BacaCraftReference;
+import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.inventory.ContainerSmokehouse;
 import com.burnert.bacacraft.tile.TileEntitySmokehouse;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -9,7 +9,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiSmokehouse extends GuiContainer {
-	private static final ResourceLocation SMOKEHOUSE_GUI_TEXTURES = new ResourceLocation(BacaCraftReference.MOD_ID, "textures/gui/container/smokehouse.png");
+	private static final ResourceLocation SMOKEHOUSE_GUI_TEXTURES = new ResourceLocation(BacaCraft.MOD_ID, "textures/gui/container/smokehouse.png");
 	private final InventoryPlayer inventoryPlayer;
 	private final TileEntitySmokehouse tileSmokehouse;
 

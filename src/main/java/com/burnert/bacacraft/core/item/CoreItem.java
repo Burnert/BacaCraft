@@ -1,17 +1,16 @@
-package com.burnert.bacacraft.item;
+package com.burnert.bacacraft.core.item;
 
 import com.burnert.bacacraft.BacaCraft;
-import com.burnert.bacacraft.core.BacaCraftItemRegistry;
-import com.burnert.bacacraft.core.config.BacaCraftReference;
-import com.burnert.bacacraft.util.IItemModelRegister;
+import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
+import com.burnert.bacacraft.core.util.IItemModelRegister;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
-public abstract class AbstractItemBase extends Item implements IItemModelRegister {
+public class CoreItem extends Item implements IItemModelRegister {
 
-	public AbstractItemBase(String name) {
-		this.setUnlocalizedName(BacaCraftReference.MOD_ID + "." + name);
-		this.setRegistryName(new ResourceLocation(BacaCraftReference.MOD_ID + ":" + name));
+	public CoreItem(String name) {
+		this.setUnlocalizedName(BacaCraft.MOD_ID + "." + name);
+		this.setRegistryName(new ResourceLocation(BacaCraft.MOD_ID + ":" + name));
 
 		BacaCraftItemRegistry.itemList.add(this);
 	}

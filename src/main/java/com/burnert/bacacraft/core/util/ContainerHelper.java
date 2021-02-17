@@ -1,4 +1,4 @@
-package com.burnert.bacacraft.util;
+package com.burnert.bacacraft.core.util;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;

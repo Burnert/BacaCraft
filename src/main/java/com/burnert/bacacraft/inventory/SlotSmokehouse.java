@@ -1,6 +1,6 @@
 package com.burnert.bacacraft.inventory;
 
-import com.burnert.bacacraft.core.BacaCraftItemRegistry;
+import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;

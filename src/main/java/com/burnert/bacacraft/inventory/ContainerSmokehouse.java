@@ -1,15 +1,13 @@
 package com.burnert.bacacraft.inventory;
 
 import com.burnert.bacacraft.BacaCraft;
-import com.burnert.bacacraft.core.BacaCraftItemRegistry;
+import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
 import com.burnert.bacacraft.tile.TileEntitySmokehouse;
-import com.burnert.bacacraft.util.ContainerHelper;
+import com.burnert.bacacraft.core.util.ContainerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

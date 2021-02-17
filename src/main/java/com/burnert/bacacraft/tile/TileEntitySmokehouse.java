@@ -2,8 +2,7 @@ package com.burnert.bacacraft.tile;
 
 import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.block.BlockSmokehouse;
-import com.burnert.bacacraft.core.BacaCraftItemRegistry;
-import com.burnert.bacacraft.core.config.BacaCraftReference;
+import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
 import com.burnert.bacacraft.inventory.ContainerSmokehouse;
 import com.burnert.bacacraft.inventory.ISidedInventoryAdvanced;
 import com.burnert.bacacraft.inventory.SidedInventoryWrapper;
@@ -256,7 +255,7 @@ public class TileEntitySmokehouse extends TileEntity implements ITickable, ISide
 	}
 
 	public String getGuiID() {
-		return BacaCraftReference.MOD_ID + ":smokehouse";
+		return BacaCraft.MOD_ID + ":smokehouse";
 	}
 
 	@Nullable

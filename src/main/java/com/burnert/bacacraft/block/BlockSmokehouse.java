@@ -1,9 +1,9 @@
 package com.burnert.bacacraft.block;
 
 import com.burnert.bacacraft.BacaCraft;
-import com.burnert.bacacraft.core.BacaCraftBlockRegistry;
+import com.burnert.bacacraft.core.block.CoreBlock;
+import com.burnert.bacacraft.core.registry.BacaCraftBlockRegistry;
 import com.burnert.bacacraft.core.BacaCraftCreativeTabs;
-import com.burnert.bacacraft.core.config.BacaCraftReference;
 import com.burnert.bacacraft.tile.TileEntitySmokehouse;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -33,7 +33,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockSmokehouse extends BlockBase implements ITileEntityProvider {
+public class BlockSmokehouse extends CoreBlock implements ITileEntityProvider {
 
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	public static final PropertyBool BURNING = PropertyBool.create("burning");
@@ -106,7 +106,7 @@ public class BlockSmokehouse extends BlockBase implements ITileEntityProvider {
 				TileEntitySmokehouse tileEntitySmokehouse = (TileEntitySmokehouse) tileEntity;
 //				BacaCraft.LOGGER.info("Slot 1 content: " + tileEntitySmokehouse.getStackInSlot(1).getItem().getUnlocalizedName());
 //				tileEntitySmokehouse.setInventorySlotContents(1, playerIn.getHeldItemMainhand().splitStack(1));
-				playerIn.openGui(BacaCraft.instance, BacaCraftReference.GUI_SMOKEHOUSE, worldIn, pos.getX(), pos.getY(), pos.getZ());
+				playerIn.openGui(BacaCraft.instance, BacaCraft.GUI_SMOKEHOUSE, worldIn, pos.getX(), pos.getY(), pos.getZ());
 			}
 			return true;
 		}

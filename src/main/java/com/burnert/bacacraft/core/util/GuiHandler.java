@@ -1,6 +1,6 @@
-package com.burnert.bacacraft.util;
+package com.burnert.bacacraft.core.util;
 
-import com.burnert.bacacraft.core.config.BacaCraftReference;
+import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.gui.inventory.GuiSmokehouse;
 import com.burnert.bacacraft.inventory.ContainerSmokehouse;
 import com.burnert.bacacraft.tile.TileEntitySmokehouse;
@@ -15,7 +15,7 @@ public class GuiHandler implements IGuiHandler {
 	@Nullable
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		if (ID == BacaCraftReference.GUI_SMOKEHOUSE) {
+		if (ID == BacaCraft.GUI_SMOKEHOUSE) {
 			return new ContainerSmokehouse(player.inventory, (TileEntitySmokehouse) world.getTileEntity(new BlockPos(x, y, z)));
 		}
 		return null;
@@ -24,7 +24,7 @@ public class GuiHandler implements IGuiHandler {
 	@Nullable
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		if (ID == BacaCraftReference.GUI_SMOKEHOUSE) {
+		if (ID == BacaCraft.GUI_SMOKEHOUSE) {
 			return new GuiSmokehouse(player.inventory, (TileEntitySmokehouse) world.getTileEntity(new BlockPos(x, y, z)));
 		}
 		return null;

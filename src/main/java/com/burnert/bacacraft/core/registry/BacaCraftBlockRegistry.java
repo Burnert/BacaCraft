@@ -1,11 +1,8 @@
-package com.burnert.bacacraft.core;
+package com.burnert.bacacraft.core.registry;
 
-import com.burnert.bacacraft.block.BlockBase;
 import com.burnert.bacacraft.block.BlockMountainCheese;
 import com.burnert.bacacraft.block.BlockSmokehouse;
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 
 import java.util.ArrayList;
 import java.util.List;

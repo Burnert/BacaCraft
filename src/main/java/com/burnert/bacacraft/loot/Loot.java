@@ -1,8 +1,7 @@
 package com.burnert.bacacraft.loot;
 
-import com.burnert.bacacraft.core.BacaCraftBlockRegistry;
-import com.burnert.bacacraft.core.BacaCraftItemRegistry;
-import com.burnert.bacacraft.core.config.BacaCraftReference;
+import com.burnert.bacacraft.BacaCraft;
+import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.*;
@@ -17,7 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nonnull;
 
-@Mod.EventBusSubscriber(modid = BacaCraftReference.MOD_ID)
+@Mod.EventBusSubscriber(modid = BacaCraft.MOD_ID)
 @SuppressWarnings("unused")
 public class Loot {
 
@@ -46,7 +45,7 @@ public class Loot {
     @SuppressWarnings("unused")
     public static void onLootTableLoad(@Nonnull LootTableLoadEvent event) {
         LootTable lootTable = event.getTable();
-        LootPool lootPool = new LootPool(NO_ENTRIES, NO_CONDITION, new RandomValueRange(0, 3), new RandomValueRange(0, 0), BacaCraftReference.MOD_ID);
+        LootPool lootPool = new LootPool(NO_ENTRIES, NO_CONDITION, new RandomValueRange(0, 3), new RandomValueRange(0, 0), BacaCraft.MOD_ID);
         if (event.getName().equals(LootTableList.CHESTS_ABANDONED_MINESHAFT)) {
             lootPool.addEntry(createLootEntry(BacaCraftItemRegistry.MOUNTAIN_CHEESE_FORM, 1, 1, 1.0f));
             lootPool.addEntry(createLootEntry(BacaCraftItemRegistry.MOUNTAIN_CHEESE_SMOKED, 1, 3, 1.0f));

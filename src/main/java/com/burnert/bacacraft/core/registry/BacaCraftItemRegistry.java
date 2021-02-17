@@ -1,4 +1,4 @@
-package com.burnert.bacacraft.core;
+package com.burnert.bacacraft.core.registry;
 
 import com.burnert.bacacraft.item.*;
 import net.minecraft.item.Item;
