@@ -2,7 +2,7 @@ package com.burnert.bacacraft.core.item;
 
 import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
-import com.burnert.bacacraft.core.util.IItemModelRegister;
+import com.burnert.bacacraft.core.registry.IItemModelRegister;
 import net.minecraft.item.ItemFood;
 import net.minecraft.util.ResourceLocation;
 

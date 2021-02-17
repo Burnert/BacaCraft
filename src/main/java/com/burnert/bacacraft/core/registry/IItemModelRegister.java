@@ -1,4 +1,4 @@
-package com.burnert.bacacraft.core.util;
+package com.burnert.bacacraft.core.registry;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

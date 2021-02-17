@@ -2,7 +2,7 @@ package com.burnert.bacacraft.core.block;
 
 import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.core.registry.BacaCraftBlockRegistry;
-import com.burnert.bacacraft.core.util.IItemModelRegister;
+import com.burnert.bacacraft.core.registry.IItemModelRegister;
 import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;

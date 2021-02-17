@@ -2,7 +2,7 @@ package com.burnert.bacacraft.core.event;
 
 import com.burnert.bacacraft.core.registry.BacaCraftBlockRegistry;
 import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
-import com.burnert.bacacraft.core.util.IItemModelRegister;
+import com.burnert.bacacraft.core.registry.IItemModelRegister;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
