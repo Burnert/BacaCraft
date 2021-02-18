@@ -1,13 +1,12 @@
 package com.burnert.bacacraft.block;
 
 import com.burnert.bacacraft.BacaCraft;
-import com.burnert.bacacraft.core.block.CoreBlock;
+import com.burnert.bacacraft.core.block.BlockTileCore;
 import com.burnert.bacacraft.core.registry.BacaCraftBlockRegistry;
-import com.burnert.bacacraft.core.BacaCraftCreativeTabs;
+import com.burnert.bacacraft.BacaCraftCreativeTabs;
 import com.burnert.bacacraft.tile.TileEntitySmokehouse;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -33,7 +32,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockSmokehouse extends CoreBlock implements ITileEntityProvider {
+public class BlockSmokehouse extends BlockTileCore {
 
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	public static final PropertyBool BURNING = PropertyBool.create("burning");
@@ -75,13 +74,10 @@ public class BlockSmokehouse extends CoreBlock implements ITileEntityProvider {
 	@SuppressWarnings("incomplete-switch")
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		if (stateIn.getValue(BURNING) && !isBlockTopObstructed(worldIn, pos)) {
-//			EnumFacing enumfacing = (EnumFacing)stateIn.getValue(FACING);
 			double x = (double)pos.getX() + 0.4D + rand.nextDouble() * 0.2D;
 			double y = (double)(pos.getY() + 1);
 			double z = (double)pos.getZ() + 0.4D + rand.nextDouble() * 0.2D;
 			double ySpeed = 0.02D + rand.nextDouble() * 0.06D;
-//			double d3 = 0.52D;
-//			double d4 = rand.nextDouble() * 0.6D - 0.3D;
 			if (rand.nextDouble() < 0.1D) {
 				worldIn.playSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 			}
@@ -101,11 +97,6 @@ public class BlockSmokehouse extends CoreBlock implements ITileEntityProvider {
 		else {
 			TileEntity tileEntity = worldIn.getTileEntity(pos);
 			if (tileEntity instanceof TileEntitySmokehouse) {
-				//playerIn.displayGUIChest((TileEntitySmokehouse)tileentity);
-				//playerIn.addStat(StatList.FURNACE_INTERACTION);
-				TileEntitySmokehouse tileEntitySmokehouse = (TileEntitySmokehouse) tileEntity;
-//				BacaCraft.LOGGER.info("Slot 1 content: " + tileEntitySmokehouse.getStackInSlot(1).getItem().getUnlocalizedName());
-//				tileEntitySmokehouse.setInventorySlotContents(1, playerIn.getHeldItemMainhand().splitStack(1));
 				playerIn.openGui(BacaCraft.instance, BacaCraft.GUI_SMOKEHOUSE, worldIn, pos.getX(), pos.getY(), pos.getZ());
 			}
 			return true;

@@ -2,13 +2,13 @@ package com.burnert.bacacraft.core.item;
 
 import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
-import com.burnert.bacacraft.core.registry.IItemModelRegister;
+import com.burnert.bacacraft.core.registry.IModelRegister;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
-public class CoreItem extends Item implements IItemModelRegister {
+public class ItemCore extends Item implements IModelRegister {
 
-	public CoreItem(String name) {
+	public ItemCore(String name) {
 		this.setUnlocalizedName(BacaCraft.MOD_ID + "." + name);
 		this.setRegistryName(new ResourceLocation(BacaCraft.MOD_ID + ":" + name));
 

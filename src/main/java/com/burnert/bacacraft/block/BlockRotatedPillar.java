@@ -1,6 +1,6 @@
 package com.burnert.bacacraft.block;
 
-import com.burnert.bacacraft.core.block.CoreBlock;
+import com.burnert.bacacraft.core.block.BlockCore;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -15,7 +15,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockRotatedPillar extends CoreBlock {
+public class BlockRotatedPillar extends BlockCore {
 	public static final PropertyEnum<EnumFacing.Axis> AXIS = PropertyEnum.create("axis", EnumFacing.Axis.class);
 
 	protected BlockRotatedPillar(String name, Material materialIn) {

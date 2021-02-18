@@ -1,4 +1,4 @@
-package com.burnert.bacacraft.inventory;
+package com.burnert.bacacraft.core.inventory;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

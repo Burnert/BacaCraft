@@ -6,7 +6,10 @@ import net.minecraft.inventory.Slot;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ContainerHelper {
+public final class ContainerHelper {
+
+	private ContainerHelper() { }
+
 	public static List<Slot> createStandardPlayerSlots(InventoryPlayer inventoryPlayer, int offsetX, int offsetY) {
 		List<Slot> slots = new LinkedList<>();
 		for (int i = 0; i < 3; ++i) {

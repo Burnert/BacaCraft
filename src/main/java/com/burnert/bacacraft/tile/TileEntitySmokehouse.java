@@ -3,9 +3,12 @@ package com.burnert.bacacraft.tile;
 import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.block.BlockSmokehouse;
 import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
+import com.burnert.bacacraft.core.tile.TileCore;
+import com.burnert.bacacraft.core.util.ArrayHelper;
+import com.burnert.bacacraft.core.util.InventoryHelper;
 import com.burnert.bacacraft.inventory.ContainerSmokehouse;
-import com.burnert.bacacraft.inventory.ISidedInventoryAdvanced;
-import com.burnert.bacacraft.inventory.SidedInventoryWrapper;
+import com.burnert.bacacraft.core.inventory.ISidedInventoryAdvanced;
+import com.burnert.bacacraft.core.inventory.SidedInventoryWrapper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -13,7 +16,6 @@ import net.minecraft.inventory.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
@@ -30,7 +32,7 @@ import javax.annotation.Nullable;
 
 import static com.burnert.bacacraft.block.BlockSmokehouse.isBlockTopObstructed;
 
-public class TileEntitySmokehouse extends TileEntity implements ITickable, ISidedInventoryAdvanced {
+public class TileEntitySmokehouse extends TileCore implements ITickable, ISidedInventoryAdvanced {
 
 //	private static final int[] SLOTS_TOP = new int[]{};
 	private static final int[] SLOTS_SIDES = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8};
@@ -53,6 +55,30 @@ public class TileEntitySmokehouse extends TileEntity implements ITickable, ISide
 		BacaCraft.LOGGER.info(this.getName() + " constructed");
 	}
 
+	public int getSlotSmokeTime(int slot) {
+		return this.smokeTime[slot];
+	}
+
+	public int getSlotTotalSmokeTime(int slot) {
+		return this.totalSmokeTime[slot];
+	}
+
+	private void setSlotSmoketime(int slot, int time) {
+		this.smokeTime[slot] = time;
+	}
+
+	private void setSlotTotalSmoketime(int slot, int time) {
+		this.totalSmokeTime[slot] = time;
+	}
+
+	private void fillSlotSmoketime(int[] times) {
+		System.arraycopy(times, 0, this.smokeTime, 0, times.length);
+	}
+
+	private void fillSlotTotalSmoketime(int[] times) {
+		System.arraycopy(times, 0, this.smokeTime, 0, times.length);
+	}
+
 	@Override
 	public int[] getSlotsForFace(EnumFacing side) {
 		if (side == EnumFacing.DOWN)
@@ -67,12 +93,9 @@ public class TileEntitySmokehouse extends TileEntity implements ITickable, ISide
 			if (isItemFuel(stack))
 				return true;
 
-			int emptySlots = 0;
-			for (int i = 1; i < 9; i++) {
-				if (smokehouseItemStacks.get(i).isEmpty())
-					emptySlots++;
-			}
-			if (emptySlots > 0) {
+			NonNullList<ItemStack> mountainCheeseSlots = InventoryHelper.getSlotSubarray(smokehouseItemStacks, 1, 9);
+
+			if (InventoryHelper.isInventoryNotFull(mountainCheeseSlots)) {
 				return stack.getItem() == BacaCraftItemRegistry.MOUNTAIN_CHEESE;
 			}
 		}
@@ -92,20 +115,16 @@ public class TileEntitySmokehouse extends TileEntity implements ITickable, ISide
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		this.smokehouseItemStacks = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
-//		this.smokeTime = new int[8];
-//		this.totalSmokeTime = new int[8];
 
 		ItemStackHelper.loadAllItems(compound, this.smokehouseItemStacks);
 		this.smokehouseBurnTime = compound.getInteger("BurnTime");
 
 		int[] NBTSmokeTime = compound.getIntArray("SmokeTime");
-		for (int i = 0; i < NBTSmokeTime.length; ++i) {
-			this.smokeTime[i] = NBTSmokeTime[i];
-		}
+		ArrayHelper.fillArray(this.smokeTime, NBTSmokeTime);
+
 		int[] NBTSmokeTimeTotal = compound.getIntArray("SmokeTimeTotal");
-		for (int j = 0; j < NBTSmokeTimeTotal.length; ++j) {
-			this.totalSmokeTime[j] = NBTSmokeTimeTotal[j];
-		}
+		ArrayHelper.fillArray(this.totalSmokeTime, NBTSmokeTimeTotal);
+
 		this.currentItemBurnTime = TileEntitySmokehouse.getItemBurnTime(smokehouseItemStacks.get(0));
 
 		if (compound.hasKey("CustomName", 8)) {
@@ -116,7 +135,7 @@ public class TileEntitySmokehouse extends TileEntity implements ITickable, ISide
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
-		compound.setInteger("BurnTime", (short) this.smokehouseBurnTime);
+		compound.setInteger("BurnTime", this.smokehouseBurnTime);
 		compound.setIntArray("SmokeTime", this.smokeTime);
 		compound.setIntArray("SmokeTimeTotal", this.totalSmokeTime);
 		ItemStackHelper.saveAllItems(compound, this.smokehouseItemStacks);
@@ -271,12 +290,7 @@ public class TileEntitySmokehouse extends TileEntity implements ITickable, ISide
 
 	@Override
 	public boolean isEmpty() {
-		for (ItemStack stack : this.smokehouseItemStacks) {
-			if (!stack.isEmpty()) {
-				return false;
-			}
-		}
-		return true;
+		return InventoryHelper.isInventoryEmpty(this.smokehouseItemStacks);
 	}
 
 	@Override

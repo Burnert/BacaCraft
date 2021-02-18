@@ -1,6 +1,5 @@
-package com.burnert.bacacraft.core;
+package com.burnert.bacacraft;
 
-import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.core.registry.BacaCraftBlockRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

@@ -2,7 +2,7 @@ package com.burnert.bacacraft.core.event;
 
 import com.burnert.bacacraft.core.registry.BacaCraftBlockRegistry;
 import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
-import com.burnert.bacacraft.core.registry.IItemModelRegister;
+import com.burnert.bacacraft.core.registry.IModelRegister;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -27,8 +27,8 @@ public class RegistryEventHandler {
 	}
 
 	private static void registerModel(Object obj) {
-		if (obj instanceof IItemModelRegister) {
-			((IItemModelRegister) obj).registerModel();
+		if (obj instanceof IModelRegister) {
+			((IModelRegister) obj).registerModel();
 		}
 	}
 

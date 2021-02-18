@@ -1,6 +1,6 @@
 package com.burnert.bacacraft.block;
 
-import com.burnert.bacacraft.core.BacaCraftCreativeTabs;
+import com.burnert.bacacraft.BacaCraftCreativeTabs;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.EnumFacing;

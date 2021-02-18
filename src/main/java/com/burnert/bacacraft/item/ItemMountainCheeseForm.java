@@ -1,9 +1,9 @@
 package com.burnert.bacacraft.item;
 
-import com.burnert.bacacraft.core.BacaCraftCreativeTabs;
-import com.burnert.bacacraft.core.item.CoreItem;
+import com.burnert.bacacraft.BacaCraftCreativeTabs;
+import com.burnert.bacacraft.core.item.ItemCore;
 
-public class ItemMountainCheeseForm extends CoreItem {
+public class ItemMountainCheeseForm extends ItemCore {
 	public ItemMountainCheeseForm() {
 		super("mountain_cheese_form");
 		this.setCreativeTab(BacaCraftCreativeTabs.MAIN);

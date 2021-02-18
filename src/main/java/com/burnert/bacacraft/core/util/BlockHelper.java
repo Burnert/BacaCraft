@@ -1,5 +1,6 @@
 package com.burnert.bacacraft.core.util;
 
-public class BlockHelper {
+public final class BlockHelper {
 
+	private BlockHelper() { }
 }

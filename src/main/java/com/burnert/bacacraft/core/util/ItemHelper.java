@@ -1,5 +1,6 @@
 package com.burnert.bacacraft.core.util;
 
-public class ItemHelper {
+public final class ItemHelper {
 
+	private ItemHelper() { }
 }

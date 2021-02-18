@@ -1,7 +1,7 @@
 package com.burnert.bacacraft.item;
 
-import com.burnert.bacacraft.core.BacaCraftCreativeTabs;
-import com.burnert.bacacraft.core.item.CoreItem;
+import com.burnert.bacacraft.BacaCraftCreativeTabs;
+import com.burnert.bacacraft.core.item.ItemCore;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.*;
 
-public class ItemDevItem extends CoreItem {
+public class ItemDevItem extends ItemCore {
 
 	public ItemDevItem() {
 		super("mountain_cheese_devitem");
