@@ -2,7 +2,7 @@ package com.burnert.bacacraft.inventory;
 
 import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
-import com.burnert.bacacraft.tile.TileEntitySmokehouse;
+import com.burnert.bacacraft.tile.TileEntitySmokehouseLegacy;
 import com.burnert.bacacraft.core.util.ContainerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerSmokehouse extends Container {
 
-	private final TileEntitySmokehouse tileSmokehouse;
+	private final TileEntitySmokehouseLegacy tileSmokehouse;
 
 	// Fuel burn time
 	private int smokehouseBurnTime;
@@ -22,7 +22,7 @@ public class ContainerSmokehouse extends Container {
 	private int[] smokeTime = new int[8];
 	private int[] totalSmokeTime = new int[8];
 
-	public ContainerSmokehouse(InventoryPlayer inventoryPlayer, TileEntitySmokehouse smokehouseInventory) {
+	public ContainerSmokehouse(InventoryPlayer inventoryPlayer, TileEntitySmokehouseLegacy smokehouseInventory) {
 		this.tileSmokehouse = smokehouseInventory;
 		// Fuel
 		this.addSlotToContainer(new SlotSmokehouseFuel(smokehouseInventory, 0, 80, 62));
@@ -115,7 +115,7 @@ public class ContainerSmokehouse extends Container {
 					if (!this.mergeItemStack(itemstack1, 1, 9, false)) {
 						return ItemStack.EMPTY;
 					}
-				} else if (TileEntitySmokehouse.isItemFuel(itemstack1)) {
+				} else if (TileEntitySmokehouseLegacy.isItemFuel(itemstack1)) {
 					if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
 						return ItemStack.EMPTY;
 					}

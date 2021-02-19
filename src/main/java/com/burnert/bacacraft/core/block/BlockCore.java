@@ -25,8 +25,8 @@ public class BlockCore extends Block implements IModelRegister {
 		this.setUnlocalizedName(BacaCraft.MOD_ID + "." + name);
 		this.setRegistryName(new ResourceLocation(BacaCraft.MOD_ID, name));
 
-		BacaCraftBlockRegistry.blockList.add(this);
-		BacaCraftItemRegistry.itemList.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
+		BacaCraftBlockRegistry.register(this);
+		registerItemBlock();
 	}
 
 	public Block setSound(SoundType sound) {
@@ -38,5 +38,9 @@ public class BlockCore extends Block implements IModelRegister {
 	@SideOnly(Side.CLIENT)
 	public void registerModel() {
 		BacaCraft.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
+	}
+
+	protected void registerItemBlock() {
+		BacaCraftItemRegistry.register(new ItemBlock(this).setRegistryName(this.getRegistryName()));
 	}
 }

@@ -13,7 +13,7 @@ public class ItemFoodCore extends ItemFood implements IModelRegister {
 		this.setUnlocalizedName(BacaCraft.MOD_ID + "." + name);
 		this.setRegistryName(new ResourceLocation(BacaCraft.MOD_ID + ":" + name));
 
-		BacaCraftItemRegistry.itemList.add(this);
+		BacaCraftItemRegistry.register(this);
 	}
 
 	public ItemFoodCore(String name, int amount, float saturation) {

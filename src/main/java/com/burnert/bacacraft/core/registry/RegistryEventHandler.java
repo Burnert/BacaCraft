@@ -1,8 +1,5 @@
-package com.burnert.bacacraft.core.event;
+package com.burnert.bacacraft.core.registry;
 
-import com.burnert.bacacraft.core.registry.BacaCraftBlockRegistry;
-import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
-import com.burnert.bacacraft.core.registry.IModelRegister;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -34,7 +31,11 @@ public class RegistryEventHandler {
 
 	@SubscribeEvent
 	public static void onModelRegister(final ModelRegistryEvent event) {
-		for (Item item : BacaCraftItemRegistry.itemList) registerModel(item);
-		for (Block block : BacaCraftBlockRegistry.blockList) registerModel(block);
+		for (Item item : BacaCraftItemRegistry.itemList) {
+			registerModel(item);
+		}
+		for (Block block : BacaCraftBlockRegistry.blockList) {
+			registerModel(block);
+		}
 	}
 }

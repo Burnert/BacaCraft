@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=smokehouse": {
+      "model": "bacacraft:smokehouse"
+    }
+  }
+}

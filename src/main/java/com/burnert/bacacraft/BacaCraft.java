@@ -1,8 +1,10 @@
 package com.burnert.bacacraft;
 
+import com.burnert.bacacraft.block.BlockContraption;
 import com.burnert.bacacraft.core.proxy.CommonProxy;
 import com.burnert.bacacraft.core.registry.BacaCraftTERegistry;
 import com.burnert.bacacraft.core.util.GuiHandler;
+import com.burnert.bacacraft.item.ItemBlockContraption;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;

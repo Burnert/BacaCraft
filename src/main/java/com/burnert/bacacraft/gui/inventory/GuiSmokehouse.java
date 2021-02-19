@@ -2,7 +2,7 @@ package com.burnert.bacacraft.gui.inventory;
 
 import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.inventory.ContainerSmokehouse;
-import com.burnert.bacacraft.tile.TileEntitySmokehouse;
+import com.burnert.bacacraft.tile.TileEntitySmokehouseLegacy;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -11,9 +11,9 @@ import net.minecraft.util.ResourceLocation;
 public class GuiSmokehouse extends GuiContainer {
 	private static final ResourceLocation SMOKEHOUSE_GUI_TEXTURES = new ResourceLocation(BacaCraft.MOD_ID, "textures/gui/container/smokehouse.png");
 	private final InventoryPlayer inventoryPlayer;
-	private final TileEntitySmokehouse tileSmokehouse;
+	private final TileEntitySmokehouseLegacy tileSmokehouse;
 
-	public GuiSmokehouse(InventoryPlayer inventory, TileEntitySmokehouse tileEntity) {
+	public GuiSmokehouse(InventoryPlayer inventory, TileEntitySmokehouseLegacy tileEntity) {
 		super(new ContainerSmokehouse(inventory, tileEntity));
 		this.xSize = 176;
 		this.ySize = 175;
@@ -44,13 +44,13 @@ public class GuiSmokehouse extends GuiContainer {
 		int j = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
-		if (TileEntitySmokehouse.isBurning(this.tileSmokehouse)) {
+		if (TileEntitySmokehouseLegacy.isBurning(this.tileSmokehouse)) {
 			int k = this.getBurnLeftScaled(13);
 			this.drawTexturedModalRect(i + 81, j + 46 + 12 - k, this.xSize, 12 - k, 14, 14 - (12 - k));
 		}
 
 		for (int k = 0; k < 8; ++k) {
-			if (TileEntitySmokehouse.isSmokingSlot(this.tileSmokehouse, k)) {
+			if (TileEntitySmokehouseLegacy.isSmokingSlot(this.tileSmokehouse, k)) {
 				int l = this.getSmokeProgressForSlotScaled(16, k);
 				this.drawTexturedModalRect(i + 17 + k * 18, j + 38, this.xSize, 14, 16 - (15 - l), 4);
 			}

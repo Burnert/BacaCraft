@@ -1,6 +1,6 @@
 package com.burnert.bacacraft.inventory;
 
-import com.burnert.bacacraft.tile.TileEntitySmokehouse;
+import com.burnert.bacacraft.tile.TileEntitySmokehouseLegacy;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -14,7 +14,7 @@ public class SlotSmokehouseFuel extends Slot {
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        return TileEntitySmokehouse.isItemFuel(stack);
+        return TileEntitySmokehouseLegacy.isItemFuel(stack);
     }
 
     @Override

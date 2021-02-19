@@ -1,10 +1,9 @@
 package com.burnert.bacacraft.block;
 
 import com.burnert.bacacraft.BacaCraft;
-import com.burnert.bacacraft.core.block.BlockTileCore;
-import com.burnert.bacacraft.core.registry.BacaCraftBlockRegistry;
 import com.burnert.bacacraft.BacaCraftCreativeTabs;
-import com.burnert.bacacraft.tile.TileEntitySmokehouse;
+import com.burnert.bacacraft.core.registry.BacaCraftBlockRegistry;
+import com.burnert.bacacraft.tile.TileEntitySmokehouseLegacy;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
@@ -32,13 +31,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockSmokehouse extends BlockTileCore {
+public class BlockSmokehouseLegacy extends BlockTileBase {
 
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	public static final PropertyBool BURNING = PropertyBool.create("burning");
 	public static final AxisAlignedBB SMOKEHOUSE_AABB = new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 2.0, 1.0);
 
-	public BlockSmokehouse() {
+	public BlockSmokehouseLegacy() {
 		super("smokehouse", Material.WOOD);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(BURNING, false));
 		this.setSound(SoundType.WOOD);
@@ -64,7 +63,7 @@ public class BlockSmokehouse extends BlockTileCore {
 
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		TileEntitySmokehouse tileEntitySmokehouse = (TileEntitySmokehouse) worldIn.getTileEntity(pos);
+		TileEntitySmokehouseLegacy tileEntitySmokehouse = (TileEntitySmokehouseLegacy) worldIn.getTileEntity(pos);
 		InventoryHelper.dropInventoryItems(worldIn, pos, tileEntitySmokehouse);
 		super.breakBlock(worldIn, pos, state);
 	}
@@ -96,7 +95,7 @@ public class BlockSmokehouse extends BlockTileCore {
 		}
 		else {
 			TileEntity tileEntity = worldIn.getTileEntity(pos);
-			if (tileEntity instanceof TileEntitySmokehouse) {
+			if (tileEntity instanceof TileEntitySmokehouseLegacy) {
 				playerIn.openGui(BacaCraft.instance, BacaCraft.GUI_SMOKEHOUSE, worldIn, pos.getX(), pos.getY(), pos.getZ());
 			}
 			return true;
@@ -133,7 +132,7 @@ public class BlockSmokehouse extends BlockTileCore {
 	@Nullable
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileEntitySmokehouse();
+		return new TileEntitySmokehouseLegacy();
 	}
 
 	@Override
@@ -147,8 +146,8 @@ public class BlockSmokehouse extends BlockTileCore {
 
 		if (stack.hasDisplayName()) {
 			TileEntity tileentity = worldIn.getTileEntity(pos);
-			if (tileentity instanceof TileEntitySmokehouse) {
-				((TileEntitySmokehouse)tileentity).setCustomInventoryName(stack.getDisplayName());
+			if (tileentity instanceof TileEntitySmokehouseLegacy) {
+				((TileEntitySmokehouseLegacy)tileentity).setCustomInventoryName(stack.getDisplayName());
 			}
 		}
 	}

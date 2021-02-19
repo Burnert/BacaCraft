@@ -12,7 +12,7 @@ public class ItemCore extends Item implements IModelRegister {
 		this.setUnlocalizedName(BacaCraft.MOD_ID + "." + name);
 		this.setRegistryName(new ResourceLocation(BacaCraft.MOD_ID + ":" + name));
 
-		BacaCraftItemRegistry.itemList.add(this);
+		BacaCraftItemRegistry.register(this);
 	}
 
 	protected int[] getAvailableSubtypeMetadata() {
