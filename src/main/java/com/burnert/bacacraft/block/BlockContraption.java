@@ -1,5 +1,6 @@
 package com.burnert.bacacraft.block;
 
+import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.BacaCraftCreativeTabs;
 import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
 import com.burnert.bacacraft.item.ItemBlockContraption;
@@ -16,6 +17,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -59,6 +61,14 @@ public class BlockContraption extends BlockTileBase {
 	}
 
 	// BlockCore:
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerModel() {
+		for (Type type : Type.values()) {
+			BacaCraft.proxy.registerItemRenderer(Item.getItemFromBlock(this), type.metadata, "inventory");
+		}
+	}
 
 	@Override
 	protected void registerItemBlock() {
