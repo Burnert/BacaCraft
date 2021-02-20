@@ -8,6 +8,7 @@ tile.bacacraft.mountain_cheese_block.name=Mountain Cheese Block
 tile.bacacraft.smokehouse.name=Smokehouse (Deprecated)
 
 tile.bacacraft.contraption.smokehouse.name=Smokehouse
+tile.bacacraft.contraption.cooker.name=Cooker
 
 container.bacacraft.smokehouse=Smokehouse
 

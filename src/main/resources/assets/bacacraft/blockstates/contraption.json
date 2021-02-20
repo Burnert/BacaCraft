@@ -6,7 +6,8 @@
   },
   "variants": {
     "type": {
-      "smokehouse": { "model": "bacacraft:smokehouse" }
+      "smokehouse": { "model": "bacacraft:smokehouse" },
+      "cooker": { "model": "bacacraft:smokehouse" }
     },
     "facing": {
       "north": { "y": 0 },

@@ -4,6 +4,7 @@ import com.burnert.bacacraft.BacaCraftCreativeTabs;
 import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
 import com.burnert.bacacraft.item.ItemBlockContraption;
 import com.burnert.bacacraft.tile.TileEntityContraption;
+import com.burnert.bacacraft.tile.TileEntityCooker;
 import com.burnert.bacacraft.tile.TileEntitySmokehouse;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
@@ -13,6 +14,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -75,6 +77,8 @@ public class BlockContraption extends BlockTileBase {
 		switch (meta) {
 			case 0:
 				return new TileEntitySmokehouse();
+			case 1:
+				return new TileEntityCooker();
 			default:
 				return null;
 		}
@@ -89,10 +93,10 @@ public class BlockContraption extends BlockTileBase {
 		return new BlockStateContainer(this, TYPE, FACING);
 	}
 
-	@Override
-	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return this.getDefaultState();
-	}
+//	@Override
+//	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+//		return this.getDefaultState();
+//	}
 
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
@@ -114,7 +118,7 @@ public class BlockContraption extends BlockTileBase {
 	}
 
 	@Override
-	public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+	public boolean isSideSolid(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
 		return true;
 	}
 
@@ -143,15 +147,26 @@ public class BlockContraption extends BlockTileBase {
 
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		if (stack.getTagCompound() != null) {
-
-		}
 		TileEntityContraption tileContraption = (TileEntityContraption) worldIn.getTileEntity(pos);
 		if (tileContraption != null) {
+//			if (stack.getTagCompound() != null) {
+//				int type = stack.getTagCompound().getInteger("type");
+//				worldIn.setBlockState(pos, state.withProperty(TYPE, ))
+//			}
 			EnumFacing facing = placer.getHorizontalFacing().getOpposite();
 			tileContraption.setFacing(facing);
 		}
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+	}
+
+	@Override
+	public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
+		Type type = state.getValue(TYPE);
+		switch (type) {
+			case COOKER:
+				return SoundType.STONE;
+		}
+		return super.getSoundType(state, world, pos, entity);
 	}
 
 	@Override
@@ -163,7 +178,8 @@ public class BlockContraption extends BlockTileBase {
 	// End of Block
 
 	public enum Type implements IStringSerializable {
-		SMOKEHOUSE(0, "smokehouse");
+		SMOKEHOUSE(0, "smokehouse"),
+		COOKER(1, "cooker");
 
 		private final int metadata;
 		private final String name;

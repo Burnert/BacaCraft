@@ -8,4 +8,9 @@ public class ItemBlockCore extends ItemBlock {
 	public ItemBlockCore(Block block) {
 		super(block);
 	}
+
+	@Override
+	public int getMetadata(int meta) {
+		return meta;
+	}
 }
