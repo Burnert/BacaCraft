@@ -1,13 +1,14 @@
 package com.burnert.bacacraft.block;
 
-import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.BacaCraftCreativeTabs;
 import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
 import com.burnert.bacacraft.item.ItemBlockContraption;
 import com.burnert.bacacraft.tile.TileEntityContraption;
 import com.burnert.bacacraft.tile.TileEntitySmokehouse;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -31,12 +32,15 @@ public class BlockContraption extends BlockTileBase {
 
 	public static final PropertyEnum<Type> TYPE = PropertyEnum.create("type", Type.class);
 
+	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+
 	public static ItemBlockContraption itemBlockContraption;
 
 	private static ItemStack[] itemContraptionReferences;
 
 	public BlockContraption() {
 		super("contraption", Material.WOOD);
+		this.setDefaultTileType(TYPE, Type.SMOKEHOUSE);
 		this.setSound(SoundType.WOOD);
 		this.setHardness(1.8f);
 		this.setResistance(3.5f);
@@ -82,7 +86,21 @@ public class BlockContraption extends BlockTileBase {
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, TYPE);
+		return new BlockStateContainer(this, TYPE, FACING);
+	}
+
+	@Override
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+		return this.getDefaultState();
+	}
+
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		TileEntityContraption entity = (TileEntityContraption) worldIn.getTileEntity(pos);
+		if (entity != null) {
+			return state.withProperty(FACING, entity.getFacing());
+		}
+		return state;
 	}
 
 	@Override
@@ -126,10 +144,12 @@ public class BlockContraption extends BlockTileBase {
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		if (stack.getTagCompound() != null) {
-			TileEntityContraption tileContraption = (TileEntityContraption) worldIn.getTileEntity(pos);
-			if (tileContraption != null) {
-				int facing = placer.getHorizontalFacing().getOpposite().getIndex();
-			}
+
+		}
+		TileEntityContraption tileContraption = (TileEntityContraption) worldIn.getTileEntity(pos);
+		if (tileContraption != null) {
+			EnumFacing facing = placer.getHorizontalFacing().getOpposite();
+			tileContraption.setFacing(facing);
 		}
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}

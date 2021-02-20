@@ -30,7 +30,7 @@ public abstract class BlockTileBase extends BlockTileCore {
 		super(name, materialIn, blockMapColorIn);
 	}
 
-	protected <T extends Enum<T> & IStringSerializable> BlockTileBase setTileType(PropertyEnum<T> propertyEnum, T type) {
+	protected <T extends Enum<T> & IStringSerializable> BlockTileBase setDefaultTileType(PropertyEnum<T> propertyEnum, T type) {
 		this.setDefaultState(this.blockState.getBaseState().withProperty(propertyEnum, type));
 		return this;
 	}
@@ -47,6 +47,9 @@ public abstract class BlockTileBase extends BlockTileCore {
 			return true;
 
 		TileEntityContraption tileContraption = (TileEntityContraption) worldIn.getTileEntity(pos);
+		if (tileContraption != null)
+			System.out.println("Facing: " + tileContraption.getFacing().toString());
+
 		if (tileContraption == null || tileContraption.isInvalid())
 			return false;
 

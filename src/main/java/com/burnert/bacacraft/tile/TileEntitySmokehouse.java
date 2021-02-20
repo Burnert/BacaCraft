@@ -7,11 +7,6 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class TileEntitySmokehouse extends TileEntityContraption implements IGuiProvider {
 
-	public TileEntitySmokehouse() {
-		super();
-		BacaCraft.LOGGER.info("TileEntitySmokehouse constructed!");
-	}
-
 	// IGuiProvider:
 
 	@Override
