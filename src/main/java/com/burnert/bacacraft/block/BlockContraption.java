@@ -133,6 +133,27 @@ public class BlockContraption extends BlockTileBase {
 	}
 
 	@Override
+	public Material getMaterial(IBlockState state) {
+		Type type = state.getValue(TYPE);
+		switch (type) {
+			case COOKER:
+				return Material.ROCK;
+		}
+		return super.getMaterial(state);
+	}
+
+	@Nullable
+	@Override
+	public String getHarvestTool(IBlockState state) {
+		Type type = state.getValue(TYPE);
+		switch (type) {
+			case COOKER:
+				return "pickaxe";
+		}
+		return super.getHarvestTool(state);
+	}
+
+	@Override
 	public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
 		for (Type type : Type.values()) {
 			int meta = type.metadata;
