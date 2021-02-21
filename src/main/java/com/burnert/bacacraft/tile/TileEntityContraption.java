@@ -1,82 +1,52 @@
 package com.burnert.bacacraft.tile;
 
+import com.burnert.bacacraft.core.property.NBTPropertyInt;
+import com.burnert.bacacraft.core.property.NBTPropertyString;
 import com.burnert.bacacraft.core.tile.ITileNameable;
 import com.burnert.bacacraft.core.tile.TileEntityCore;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
 public abstract class TileEntityContraption extends TileEntityCore implements ITileNameable {
 
-	private String customName;
-
-	private EnumFacing facing = EnumFacing.NORTH;
+	public NBTPropertyString customNameProperty = new NBTPropertyString("CustomName");
+	public NBTPropertyInt facingProperty = new NBTPropertyInt("Facing", true);
 
 	public void setFacing(EnumFacing facing) {
-		this.facing = facing;
+		this.facingProperty.setIntValue(facing.getHorizontalIndex());
 	}
 
 	public EnumFacing getFacing() {
-		return facing;
+		return EnumFacing.getHorizontal(this.facingProperty.getIntValue());
 	}
 
 	// ITileNameable:
 
 	@Override
 	public void setCustomName(String name) {
-		if (!name.isEmpty())
-			this.customName = name;
+		if (!name.isEmpty()) {
+			this.customNameProperty.setStringValue(name);
+		}
 	}
 
 	@Override
 	public String getCustomName() {
-		return this.customName;
+		return this.customNameProperty.getStringValue();
 	}
 
 	@Override
 	public boolean hasCustomName() {
-		return this.customName != null;
+		return this.customNameProperty.isSet();
 	}
 
 	// End of ITileNameable
 
-	// TileEntity:
+	// TileEntityCore:
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-		super.readFromNBT(compound);
-
-		if (compound.hasKey("Facing")) {
-			int facingIndex = compound.getInteger("Facing");
-			facing = EnumFacing.getHorizontal(facingIndex);
-		}
-		if (compound.hasKey("CustomName", 8)) {
-			this.customName = compound.getString("CustomName");
-		}
+	public void createNBTProperties() {
+		this.addNBTProperty(customNameProperty);
+		this.addNBTProperty(facingProperty);
 	}
 
-	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		super.writeToNBT(compound);
-
-		compound.setInteger("Facing", this.facing.getHorizontalIndex());
-		if (this.hasCustomName()) {
-			compound.setString("CustomName", this.customName);
-		}
-
-		return compound;
-	}
-
-	@Override
-	public NBTTagCompound getUpdateTag() {
-		NBTTagCompound compound = super.getUpdateTag();
-
-		compound.setInteger("Facing", this.facing.getHorizontalIndex());
-		if (this.hasCustomName()) {
-			compound.setString("CustomName", this.customName);
-		}
-
-		return compound;
-	}
-
-	// End of TileEntity
+	// End ot TileEntityCore
 }

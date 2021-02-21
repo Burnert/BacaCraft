@@ -168,6 +168,7 @@ public class BlockContraption extends BlockTileBase {
 
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 		TileEntityContraption tileContraption = (TileEntityContraption) worldIn.getTileEntity(pos);
 		if (tileContraption != null) {
 //			if (stack.getTagCompound() != null) {
@@ -177,7 +178,6 @@ public class BlockContraption extends BlockTileBase {
 			EnumFacing facing = placer.getHorizontalFacing().getOpposite();
 			tileContraption.setFacing(facing);
 		}
-		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
 
 	@Override

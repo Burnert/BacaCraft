@@ -3,6 +3,7 @@ package com.burnert.bacacraft.block;
 import com.burnert.bacacraft.core.block.BlockTileCore;
 import com.burnert.bacacraft.core.inventory.IGuiProvider;
 import com.burnert.bacacraft.core.tile.ITileNameable;
+import com.burnert.bacacraft.core.tile.TileEntityCore;
 import com.burnert.bacacraft.tile.TileEntityContraption;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -74,10 +75,13 @@ public abstract class BlockTileBase extends BlockTileCore {
 
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		TileEntity tileEntity = worldIn.getTileEntity(pos);
+		if (tileEntity instanceof TileEntityCore) {
+			((TileEntityCore)tileEntity).createNBTProperties();
+		}
 		if (stack.hasDisplayName()) {
-			TileEntity tileentity = worldIn.getTileEntity(pos);
-			if (tileentity instanceof ITileNameable) {
-				((ITileNameable)tileentity).setCustomName(stack.getDisplayName());
+			if (tileEntity instanceof ITileNameable) {
+				((ITileNameable)tileEntity).setCustomName(stack.getDisplayName());
 			}
 		}
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
