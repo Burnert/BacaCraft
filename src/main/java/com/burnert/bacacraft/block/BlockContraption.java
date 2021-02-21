@@ -10,7 +10,6 @@ import com.burnert.bacacraft.tile.TileEntitySmokehouse;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -18,7 +17,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -31,7 +29,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.Locale;
 import java.util.Random;
 
 public class BlockContraption extends BlockTileBase {
@@ -39,7 +36,7 @@ public class BlockContraption extends BlockTileBase {
 	public static final PropertyEnum<Type> TYPE = PropertyEnum.create("type", Type.class);
 
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
-	public static final PropertyBool ACTIVE = PropertyBool.create("active");
+//	public static final PropertyBool ACTIVE = PropertyBool.create("active");
 
 	public static ItemBlockContraption itemBlockContraption;
 

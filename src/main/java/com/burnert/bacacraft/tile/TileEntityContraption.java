@@ -66,5 +66,17 @@ public abstract class TileEntityContraption extends TileEntityCore implements IT
 		return compound;
 	}
 
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		NBTTagCompound compound = super.getUpdateTag();
+
+		compound.setInteger("Facing", this.facing.getHorizontalIndex());
+		if (this.hasCustomName()) {
+			compound.setString("CustomName", this.customName);
+		}
+
+		return compound;
+	}
+
 	// End of TileEntity
 }
