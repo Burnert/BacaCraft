@@ -10,6 +10,7 @@ import com.burnert.bacacraft.tile.TileEntitySmokehouse;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -30,6 +31,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.Locale;
 import java.util.Random;
 
 public class BlockContraption extends BlockTileBase {
@@ -37,6 +39,7 @@ public class BlockContraption extends BlockTileBase {
 	public static final PropertyEnum<Type> TYPE = PropertyEnum.create("type", Type.class);
 
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+	public static final PropertyBool ACTIVE = PropertyBool.create("active");
 
 	public static ItemBlockContraption itemBlockContraption;
 
@@ -66,7 +69,7 @@ public class BlockContraption extends BlockTileBase {
 	@SideOnly(Side.CLIENT)
 	public void registerModel() {
 		for (Type type : Type.values()) {
-			BacaCraft.proxy.registerItemRenderer(Item.getItemFromBlock(this), type.metadata, "inventory");
+			BacaCraft.proxy.registerItemRenderer(itemBlockContraption, type.metadata, "inventory", type.getName().toLowerCase());
 		}
 	}
 
@@ -134,23 +137,13 @@ public class BlockContraption extends BlockTileBase {
 
 	@Override
 	public Material getMaterial(IBlockState state) {
-		Type type = state.getValue(TYPE);
-		switch (type) {
-			case COOKER:
-				return Material.ROCK;
-		}
-		return super.getMaterial(state);
+		return state.getValue(TYPE).getMaterial();
 	}
 
 	@Nullable
 	@Override
 	public String getHarvestTool(IBlockState state) {
-		Type type = state.getValue(TYPE);
-		switch (type) {
-			case COOKER:
-				return "pickaxe";
-		}
-		return super.getHarvestTool(state);
+		return state.getValue(TYPE).getHarvestTool();
 	}
 
 	@Override
@@ -210,18 +203,37 @@ public class BlockContraption extends BlockTileBase {
 
 	public enum Type implements IStringSerializable {
 		SMOKEHOUSE(0, "smokehouse"),
-		COOKER(1, "cooker");
+		COOKER(1, "cooker", Material.ROCK, "pickaxe");
 
 		private final int metadata;
 		private final String name;
+		private final String harvestTool;
+		private final Material material;
 
 		Type(int meta, String name) {
+			this.material = Material.WOOD;
+			this.harvestTool = "axe";
+			this.metadata = meta;
+			this.name = name;
+		}
+
+		Type(int meta, String name, Material mat, String harvestTool) {
+			this.material = mat;
+			this.harvestTool = harvestTool;
 			this.metadata = meta;
 			this.name = name;
 		}
 
 		public int getMetadata() {
 			return metadata;
+		}
+
+		public Material getMaterial() {
+			return material;
+		}
+
+		public String getHarvestTool() {
+			return harvestTool;
 		}
 
 		@Override

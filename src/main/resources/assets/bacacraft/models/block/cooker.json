@@ -1,0 +1,9 @@
+{
+    "parent": "minecraft:block/orientable",
+    "textures": {
+        "up": "bacacraft:blocks/cooker_top",
+        "down": "bacacraft:blocks/cooker_top",
+        "front": "bacacraft:blocks/cooker_front",
+        "side": "bacacraft:blocks/cooker_side"
+    }
+}

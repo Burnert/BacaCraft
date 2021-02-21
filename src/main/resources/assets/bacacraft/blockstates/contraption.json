@@ -1,13 +1,12 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "bacacraft:smokehouse",
     "uvlock": true
   },
   "variants": {
     "type": {
       "smokehouse": { "model": "bacacraft:smokehouse" },
-      "cooker": { "model": "bacacraft:smokehouse" }
+      "cooker": { "model": "bacacraft:cooker" }
     },
     "facing": {
       "north": { "y": 0 },
