@@ -2,6 +2,8 @@ package com.burnert.bacacraft.core.tile;
 
 import com.burnert.bacacraft.core.property.NBTProperty;
 import com.burnert.bacacraft.core.property.NBTPropertyNull;
+import com.burnert.bacacraft.core.property.util.NBTPropertyHelper;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -19,6 +21,10 @@ public abstract class TileEntityCore extends TileEntity {
 	 */
 	public void createNBTProperties() { }
 
+	public Map<String, NBTProperty> getNBTProperties() {
+		return ImmutableMap.copyOf(this.nbtProperties);
+	}
+
 	public void addNBTProperty(NBTProperty property) {
 		this.nbtProperties.put(property.getName(), property);
 	}
@@ -31,41 +37,7 @@ public abstract class TileEntityCore extends TileEntity {
 		return this.nbtProperties.getOrDefault(name, new NBTPropertyNull());
 	}
 
-//	public void addNBTProperty(String name, EnumNBTPropertyType tagType) {
-//		NBTProperty nbtProperty = new NBTProperty(name, tagType);
-//		this.addNBTProperty(nbtProperty);
-//	}
-
-	public static void readNBTProperty(NBTProperty property, NBTTagCompound compound) {
-		switch (property.getTagType()) {
-			case BYTE:
-				property.setByteValue(compound.getByte(property.getName()));
-				break;
-			case INT:
-				property.setIntValue(compound.getInteger(property.getName()));
-				break;
-			case STRING:
-				property.setStringValue(compound.getString(property.getName()));
-				break;
-		}
-	}
-
-	public static void writeNBTProperty(NBTProperty property, NBTTagCompound compound) {
-		switch (property.getTagType()) {
-			case BYTE:
-				compound.setByte(property.getName(), property.getByteValue());
-				break;
-			case INT:
-				compound.setInteger(property.getName(), property.getIntValue());
-				break;
-			case STRING:
-				compound.setString(property.getName(), property.getStringValue());
-				break;
-		}
-	}
-
 	// TileEntity:
-
 
 	@Override
 	public void handleUpdateTag(NBTTagCompound tag) {
@@ -75,8 +47,8 @@ public abstract class TileEntityCore extends TileEntity {
 
 	@Override
 	protected void setWorldCreate(World worldIn) {
-		super.setWorldCreate(worldIn);
 		this.createNBTProperties();
+		super.setWorldCreate(worldIn);
 	}
 
 	@Override
@@ -86,7 +58,7 @@ public abstract class TileEntityCore extends TileEntity {
 		for (String name : compound.getKeySet()) {
 			if (this.hasNBTProperty(name)) {
 				NBTProperty property = this.getNBTProperty(name);
-				readNBTProperty(property, compound);
+				NBTPropertyHelper.readNBTProperty(property, compound);
 			}
 		}
 	}
@@ -98,7 +70,7 @@ public abstract class TileEntityCore extends TileEntity {
 		for (Map.Entry<String, NBTProperty> propertyEntry : nbtProperties.entrySet()) {
 			NBTProperty property = propertyEntry.getValue();
 			if (property.isSet()) {
-				writeNBTProperty(property, compound);
+				NBTPropertyHelper.writeNBTProperty(property, compound);
 			}
 		}
 
@@ -112,7 +84,7 @@ public abstract class TileEntityCore extends TileEntity {
 		for (Map.Entry<String, NBTProperty> propertyEntry : nbtProperties.entrySet()) {
 			NBTProperty property = propertyEntry.getValue();
 			if (property.isSet() && property.shouldSendToClient()) {
-				writeNBTProperty(property, compound);
+				NBTPropertyHelper.writeNBTProperty(property, compound);
 			}
 		}
 

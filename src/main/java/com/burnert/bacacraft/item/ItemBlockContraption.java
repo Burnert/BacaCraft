@@ -17,7 +17,7 @@ public class ItemBlockContraption extends ItemBlockCore {
 		if (stack.getTagCompound() == null) {
 			stack.setTagCompound(new NBTTagCompound());
 		}
-		stack.getTagCompound().setString("type", BlockContraption.getTypeFromMeta(stack.getMetadata()).getName());
+//		stack.getTagCompound().setString("type", BlockContraption.getTypeFromMeta(stack.getMetadata()).getName());
 		return stack;
 	}
 

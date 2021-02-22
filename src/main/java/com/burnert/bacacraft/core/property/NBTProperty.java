@@ -1,24 +1,29 @@
 package com.burnert.bacacraft.core.property;
 
 import com.burnert.bacacraft.BacaCraft;
+import com.google.common.collect.ImmutableSet;
 
 import javax.annotation.Nonnull;
+import java.util.Set;
 
 public abstract class NBTProperty {
 
 	// TODO: Add all the NBT types
 	
 	private final String name;
-	private boolean sendToClient = false;
-	private boolean set;
+	private boolean sendToClient;
+	private boolean persistent;
+	private boolean displayName;
+	protected boolean set;
 
 	public NBTProperty(String name) {
 		this.name = name;
 	}
 
-	public NBTProperty(String name, boolean sendToClient) {
-		this(name);
-		this.setSendToClient(sendToClient);
+	public NBTProperty(String name, NBTPropertyAttribute... attributes) {
+		this.name = name;
+		Set<NBTPropertyAttribute> attributeSet = ImmutableSet.copyOf(attributes);
+		this.applyAttributes(attributeSet);
 	}
 
 	public static EnumNBTPropertyType getTypeFromId(byte id) {
@@ -27,6 +32,35 @@ public abstract class NBTProperty {
 
 	public boolean isSet() {
 		return this.set;
+	}
+
+	@Nonnull
+	public String getName() {
+		return name;
+	}
+
+	@Nonnull
+	public abstract EnumNBTPropertyType getTagType();
+
+	public boolean shouldSendToClient() {
+		return this.sendToClient;
+	}
+	public void setSendToClient(boolean sendToClient) {
+		this.sendToClient = sendToClient;
+	}
+
+	public boolean isPersistent() {
+		return this.persistent;
+	}
+	public void setPersistent(boolean persistent) {
+		this.persistent = persistent;
+	}
+
+	public boolean isDisplayName() {
+		return this.displayName;
+	}
+	public void setDisplayName(boolean displayName) {
+		this.displayName = displayName;
 	}
 
 	// Property Value Getters:
@@ -90,20 +124,23 @@ public abstract class NBTProperty {
 		}
 	}
 
-
-	@Nonnull
-	public String getName() {
-		return name;
+	private void applyAttributes(Set<NBTPropertyAttribute> attributes) {
+		for (NBTPropertyAttribute attribute : attributes) {
+			switch (attribute) {
+				case SEND_TO_CLIENT:
+					this.setSendToClient(true);
+					break;
+				case PERSISTENT:
+					this.setPersistent(true);
+					break;
+				case DISPLAY_NAME:
+					this.setDisplayName(true);
+					break;
+			}
+		}
 	}
 
-	@Nonnull
-	public abstract EnumNBTPropertyType getTagType();
-
-	public void setSendToClient(boolean sendToClient) {
-		this.sendToClient = sendToClient;
-	}
-
-	public boolean shouldSendToClient() {
-		return this.sendToClient;
+	public enum NBTPropertyAttribute {
+		SEND_TO_CLIENT, PERSISTENT, DISPLAY_NAME
 	}
 }

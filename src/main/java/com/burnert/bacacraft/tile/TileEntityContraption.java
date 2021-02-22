@@ -1,5 +1,6 @@
 package com.burnert.bacacraft.tile;
 
+import com.burnert.bacacraft.core.property.NBTProperty.NBTPropertyAttribute;
 import com.burnert.bacacraft.core.property.NBTPropertyInt;
 import com.burnert.bacacraft.core.property.NBTPropertyString;
 import com.burnert.bacacraft.core.tile.ITileNameable;
@@ -8,15 +9,18 @@ import net.minecraft.util.EnumFacing;
 
 public abstract class TileEntityContraption extends TileEntityCore implements ITileNameable {
 
-	public NBTPropertyString customNameProperty = new NBTPropertyString("CustomName");
-	public NBTPropertyInt facingProperty = new NBTPropertyInt("Facing", true);
+	public NBTPropertyString customNameProperty = new NBTPropertyString("CustomName",
+			NBTPropertyAttribute.SEND_TO_CLIENT,
+			NBTPropertyAttribute.DISPLAY_NAME);
+	public NBTPropertyInt facingProperty = new NBTPropertyInt("Facing",
+			NBTPropertyAttribute.SEND_TO_CLIENT);
 
 	public void setFacing(EnumFacing facing) {
-		this.facingProperty.setIntValue(facing.getHorizontalIndex());
+		this.facingProperty.setValue(facing.getHorizontalIndex());
 	}
 
 	public EnumFacing getFacing() {
-		return EnumFacing.getHorizontal(this.facingProperty.getIntValue());
+		return EnumFacing.getHorizontal(this.facingProperty.getValue());
 	}
 
 	// ITileNameable:
@@ -24,13 +28,13 @@ public abstract class TileEntityContraption extends TileEntityCore implements IT
 	@Override
 	public void setCustomName(String name) {
 		if (!name.isEmpty()) {
-			this.customNameProperty.setStringValue(name);
+			this.customNameProperty.setValue(name);
 		}
 	}
 
 	@Override
 	public String getCustomName() {
-		return this.customNameProperty.getStringValue();
+		return this.customNameProperty.getValue();
 	}
 
 	@Override

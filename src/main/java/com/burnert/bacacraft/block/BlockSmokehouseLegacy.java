@@ -3,6 +3,7 @@ package com.burnert.bacacraft.block;
 import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.BacaCraftCreativeTabs;
 import com.burnert.bacacraft.core.registry.BacaCraftBlockRegistry;
+import com.burnert.bacacraft.core.tile.TileEntityCore;
 import com.burnert.bacacraft.tile.TileEntitySmokehouseLegacy;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -131,7 +132,7 @@ public class BlockSmokehouseLegacy extends BlockTileBase {
 
 	@Nullable
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
+	public TileEntityCore createNewTileEntityCore(World worldIn, int meta) {
 		return new TileEntitySmokehouseLegacy();
 	}
 

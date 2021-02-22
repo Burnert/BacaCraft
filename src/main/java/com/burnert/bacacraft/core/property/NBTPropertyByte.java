@@ -9,9 +9,8 @@ public class NBTPropertyByte extends NBTProperty {
 	public NBTPropertyByte(String name) {
 		super(name);
 	}
-
-	public NBTPropertyByte(String name, boolean sendToClient) {
-		super(name, sendToClient);
+	public NBTPropertyByte(String name, NBTPropertyAttribute... attributes) {
+		super(name, attributes);
 	}
 
 	public byte getValue() {
@@ -19,6 +18,7 @@ public class NBTPropertyByte extends NBTProperty {
 	}
 
 	public void setValue(byte value) {
+		this.set = true;
 		this.value = value;
 	}
 

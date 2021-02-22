@@ -3,6 +3,7 @@ package com.burnert.bacacraft.block;
 import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.BacaCraftCreativeTabs;
 import com.burnert.bacacraft.core.registry.BacaCraftItemRegistry;
+import com.burnert.bacacraft.core.tile.TileEntityCore;
 import com.burnert.bacacraft.item.ItemBlockContraption;
 import com.burnert.bacacraft.tile.TileEntityContraption;
 import com.burnert.bacacraft.tile.TileEntityCooker;
@@ -83,7 +84,7 @@ public class BlockContraption extends BlockTileBase {
 
 	@Nullable
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
+	public TileEntityCore createNewTileEntityCore(World worldIn, int meta) {
 		switch (meta) {
 			case 0:
 				return new TileEntitySmokehouse();
@@ -102,11 +103,6 @@ public class BlockContraption extends BlockTileBase {
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, TYPE, FACING);
 	}
-
-//	@Override
-//	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-//		return this.getDefaultState();
-//	}
 
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {

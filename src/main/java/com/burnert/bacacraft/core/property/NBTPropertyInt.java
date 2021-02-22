@@ -9,9 +9,8 @@ public class NBTPropertyInt extends NBTProperty {
 	public NBTPropertyInt(String name) {
 		super(name);
 	}
-
-	public NBTPropertyInt(String name, boolean sendToClient) {
-		super(name, sendToClient);
+	public NBTPropertyInt(String name, NBTPropertyAttribute... attributes) {
+		super(name, attributes);
 	}
 
 	public int getValue() {
@@ -19,6 +18,7 @@ public class NBTPropertyInt extends NBTProperty {
 	}
 
 	public void setValue(int value) {
+		this.set = true;
 		this.value = value;
 	}
 

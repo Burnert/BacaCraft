@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 public class NBTPropertyNull extends NBTProperty {
 
 	public NBTPropertyNull() {
-		super("", false);
+		super("");
 	}
 
 	@Nonnull

@@ -36,6 +36,9 @@ public abstract class BlockTileBase extends BlockTileCore {
 		return this;
 	}
 
+	/**
+	 * Override this to add custom functionality on block activation (right click).
+	 */
 	public boolean onBlockActivatedImpl(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		return false;
 	}
@@ -75,15 +78,6 @@ public abstract class BlockTileBase extends BlockTileCore {
 
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		TileEntity tileEntity = worldIn.getTileEntity(pos);
-		if (tileEntity instanceof TileEntityCore) {
-			((TileEntityCore)tileEntity).createNBTProperties();
-		}
-		if (stack.hasDisplayName()) {
-			if (tileEntity instanceof ITileNameable) {
-				((ITileNameable)tileEntity).setCustomName(stack.getDisplayName());
-			}
-		}
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
 
