@@ -22,9 +22,8 @@ public abstract class TileEntityCore extends TileEntity {
 
 	public void initProperties() {
 		this.nbtPropertyContainer = this.createNBTProperties();
-		for (Map.Entry<String, NBTProperty> entry : this.nbtPropertyContainer) {
-			NBTProperty property = entry.getValue();
-			property.setTileEntity(this);
+		for (NBTProperty nbtProperty : this.nbtPropertyContainer) {
+			nbtProperty.setTileEntity(this);
 		}
 		this.createPropertyLinkers();
 	}
@@ -50,9 +49,7 @@ public abstract class TileEntityCore extends TileEntity {
 	}
 
 	private void createPropertyLinkers() {
-		for (Map.Entry<String, NBTProperty> entry : this.getNBTPropertyContainer()) {
-			NBTProperty nbtProperty = entry.getValue();
-
+		for (NBTProperty nbtProperty : this.getNBTPropertyContainer()) {
 			AttributeLinkedToState<?> linkedToState = (AttributeLinkedToState) nbtProperty.getAttribute(EnumAttributeType.LINKED_TO_STATE);
 			if (linkedToState != null) {
 				IProperty<?> property = linkedToState.getProperty();
@@ -95,10 +92,9 @@ public abstract class TileEntityCore extends TileEntity {
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 
-		for (Map.Entry<String, NBTProperty> propertyEntry : this.getNBTPropertyContainer()) {
-			NBTProperty property = propertyEntry.getValue();
-			if (property.isSet()) {
-				NBTPropertyHelper.writeNBTProperty(property, compound);
+		for (NBTProperty nbtProperty : this.getNBTPropertyContainer()) {
+			if (nbtProperty.isSet()) {
+				NBTPropertyHelper.writeNBTProperty(nbtProperty, compound);
 			}
 		}
 
@@ -109,10 +105,9 @@ public abstract class TileEntityCore extends TileEntity {
 	public NBTTagCompound getUpdateTag() {
 		NBTTagCompound compound = super.getUpdateTag();
 
-		for (Map.Entry<String, NBTProperty> propertyEntry : this.getNBTPropertyContainer()) {
-			NBTProperty property = propertyEntry.getValue();
-			if (property.isSet() && property.hasAttribute(EnumAttributeType.SEND_TO_CLIENT)) {
-				NBTPropertyHelper.writeNBTProperty(property, compound);
+		for (NBTProperty nbtProperty : this.getNBTPropertyContainer()) {
+			if (nbtProperty.isSet() && nbtProperty.hasAttribute(EnumAttributeType.SEND_TO_CLIENT)) {
+				NBTPropertyHelper.writeNBTProperty(nbtProperty, compound);
 			}
 		}
 

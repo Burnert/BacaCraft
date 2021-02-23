@@ -28,7 +28,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.Map;
 
 public abstract class BlockTileCore extends BlockCore implements ITileEntityCoreProvider {
 
@@ -63,9 +62,7 @@ public abstract class BlockTileCore extends BlockCore implements ITileEntityCore
 			IBlockState newState = state;
 			NBTPropertyContainer propertyContainer = entity.getNBTPropertyContainer();
 
-			for (Map.Entry<String, NBTProperty> entry : propertyContainer) {
-				NBTProperty nbtProperty = entry.getValue();
-
+			for (NBTProperty nbtProperty : propertyContainer) {
 				AttributeLinkedToState attributeLinkedToState = (AttributeLinkedToState)nbtProperty.getAttribute(EnumAttributeType.LINKED_TO_STATE);
 				if (attributeLinkedToState != null) {
 					if (attributeLinkedToState.hasCustomStateFunction()) {
@@ -161,16 +158,14 @@ public abstract class BlockTileCore extends BlockCore implements ITileEntityCore
 		if (entity != null) {
 			NBTPropertyContainer propertyContainer = entity.getNBTPropertyContainer();
 
-			for (Map.Entry<String, NBTProperty> entry : propertyContainer) {
-				NBTProperty property = entry.getValue();
-
-				if (property.isSet()) {
-					if (property.hasAttribute(EnumAttributeType.DISPLAY_NAME)) {
-						ItemStackHelper.setStackDisplayName(stack, property.getStringValue());
+			for (NBTProperty nbtProperty : propertyContainer) {
+				if (nbtProperty.isSet()) {
+					if (nbtProperty.hasAttribute(EnumAttributeType.DISPLAY_NAME)) {
+						ItemStackHelper.setStackDisplayName(stack, nbtProperty.getStringValue());
 						continue;
 					}
-					if (property.hasAttribute(EnumAttributeType.PERSISTENT)) {
-						NBTPropertyHelper.writeNBTProperty(property, stack.getTagCompound());
+					if (nbtProperty.hasAttribute(EnumAttributeType.PERSISTENT)) {
+						NBTPropertyHelper.writeNBTProperty(nbtProperty, stack.getTagCompound());
 					}
 				}
 			}

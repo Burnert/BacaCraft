@@ -6,7 +6,7 @@ import com.sun.istack.internal.NotNull;
 import java.util.Iterator;
 import java.util.Map;
 
-public class NBTPropertyContainer implements Iterable<Map.Entry<String, NBTProperty>> {
+public class NBTPropertyContainer implements Iterable<NBTProperty> {
 
 	public NBTPropertyContainer(NBTProperty... nbtProperties) {
 		ImmutableMap.Builder<String, NBTProperty> mapBuilder = ImmutableMap.builder();
@@ -36,7 +36,7 @@ public class NBTPropertyContainer implements Iterable<Map.Entry<String, NBTPrope
 
 	@Override
 	@NotNull
-	public Iterator<Map.Entry<String, NBTProperty>> iterator() {
-		return this.nbtProperties.entrySet().iterator();
+	public Iterator<NBTProperty> iterator() {
+		return this.nbtProperties.values().iterator();
 	}
 }
