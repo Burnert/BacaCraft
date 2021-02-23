@@ -19,7 +19,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
@@ -59,6 +58,10 @@ public class BlockContraption extends BlockTileBase {
 
 	public static Type getTypeFromMeta(int meta) {
 		return Type.values()[meta];
+	}
+
+	public static TileEntityContraption tileFromWorld(IBlockAccess world, BlockPos pos) {
+		return (TileEntityContraption) world.getTileEntity(pos);
 	}
 
 	// BlockCore:
@@ -165,14 +168,10 @@ public class BlockContraption extends BlockTileBase {
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-		TileEntityContraption tileContraption = (TileEntityContraption) worldIn.getTileEntity(pos);
-		if (tileContraption != null) {
-//			if (stack.getTagCompound() != null) {
-//				int type = stack.getTagCompound().getInteger("type");
-//				worldIn.setBlockState(pos, state.withProperty(TYPE, ))
-//			}
+		TileEntityContraption entity = tileFromWorld(worldIn, pos);
+		if (entity != null) {
 			EnumFacing facing = placer.getHorizontalFacing().getOpposite();
-			tileContraption.setFacing(facing);
+			entity.setFacing(facing);
 		}
 	}
 

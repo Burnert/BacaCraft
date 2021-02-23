@@ -1,7 +1,7 @@
 package com.burnert.bacacraft.core.tile;
 
-import com.burnert.bacacraft.core.property.NBTProperty;
-import com.burnert.bacacraft.core.property.NBTPropertyNull;
+import com.burnert.bacacraft.core.property.tile.NBTProperty;
+import com.burnert.bacacraft.core.property.tile.NBTPropertyNull;
 import com.burnert.bacacraft.core.property.util.NBTPropertyHelper;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;

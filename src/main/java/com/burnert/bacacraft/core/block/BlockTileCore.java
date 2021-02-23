@@ -1,6 +1,6 @@
 package com.burnert.bacacraft.core.block;
 
-import com.burnert.bacacraft.core.property.NBTProperty;
+import com.burnert.bacacraft.core.property.tile.NBTProperty;
 import com.burnert.bacacraft.core.property.util.NBTPropertyHelper;
 import com.burnert.bacacraft.core.tile.ITileEntityCoreProvider;
 import com.burnert.bacacraft.core.tile.ITileNameable;
@@ -96,8 +96,6 @@ public abstract class BlockTileCore extends BlockCore implements ITileEntityCore
 		Item item = Item.getItemFromBlock(this);
 		ItemStack stack = new ItemStack(item, 1, this.getMetaFromState(state));
 		ItemStackHelper.lazyInitTagCompound(stack);
-
-		TileEntity te = world.getTileEntity(pos);
 
 		TileEntityCore tileEntityCore = (TileEntityCore) world.getTileEntity(pos);
 		setItemProperties(stack, tileEntityCore);

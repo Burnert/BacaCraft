@@ -1,4 +1,4 @@
-package com.burnert.bacacraft.core.property;
+package com.burnert.bacacraft.core.property.tile;
 
 import javax.annotation.Nonnull;
 

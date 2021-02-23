@@ -1,8 +1,8 @@
 package com.burnert.bacacraft.tile;
 
-import com.burnert.bacacraft.core.property.NBTProperty.NBTPropertyAttribute;
-import com.burnert.bacacraft.core.property.NBTPropertyInt;
-import com.burnert.bacacraft.core.property.NBTPropertyString;
+import com.burnert.bacacraft.core.property.tile.NBTProperty.NBTPropertyAttribute;
+import com.burnert.bacacraft.core.property.tile.NBTPropertyInt;
+import com.burnert.bacacraft.core.property.tile.NBTPropertyString;
 import com.burnert.bacacraft.core.tile.ITileNameable;
 import com.burnert.bacacraft.core.tile.TileEntityCore;
 import net.minecraft.util.EnumFacing;

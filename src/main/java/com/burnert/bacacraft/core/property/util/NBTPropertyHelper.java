@@ -1,6 +1,6 @@
 package com.burnert.bacacraft.core.property.util;
 
-import com.burnert.bacacraft.core.property.NBTProperty;
+import com.burnert.bacacraft.core.property.tile.NBTProperty;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class NBTPropertyHelper {
