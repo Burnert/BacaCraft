@@ -8,6 +8,10 @@
       "smokehouse": { "model": "bacacraft:smokehouse" },
       "cooker": { "model": "bacacraft:cooker" }
     },
+    "active": {
+      "true": { "model": "bacacraft:cooker" },
+      "false": { }
+    },
     "facing": {
       "north": { "y": 0 },
       "south": { "y": 180 },

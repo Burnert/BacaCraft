@@ -1,6 +1,11 @@
 package com.burnert.bacacraft.tile;
 
-import com.burnert.bacacraft.core.property.tile.NBTProperty.NBTPropertyAttribute;
+import com.burnert.bacacraft.block.BlockContraption;
+import com.burnert.bacacraft.core.property.attribute.AttributeLinkedToState;
+import com.burnert.bacacraft.core.property.attribute.EnumAttributeType;
+import com.burnert.bacacraft.core.property.attribute.NBTPropertyAttribute;
+import com.burnert.bacacraft.core.property.tile.NBTPropertyBoolean;
+import com.burnert.bacacraft.core.property.tile.NBTPropertyContainer;
 import com.burnert.bacacraft.core.property.tile.NBTPropertyInt;
 import com.burnert.bacacraft.core.property.tile.NBTPropertyString;
 import com.burnert.bacacraft.core.tile.ITileNameable;
@@ -9,11 +14,21 @@ import net.minecraft.util.EnumFacing;
 
 public abstract class TileEntityContraption extends TileEntityCore implements ITileNameable {
 
-	public NBTPropertyString customNameProperty = new NBTPropertyString("CustomName",
-			NBTPropertyAttribute.SEND_TO_CLIENT,
-			NBTPropertyAttribute.DISPLAY_NAME);
-	public NBTPropertyInt facingProperty = new NBTPropertyInt("Facing",
-			NBTPropertyAttribute.SEND_TO_CLIENT);
+	private NBTPropertyString customNameProperty = new NBTPropertyString("CustomName",
+			new NBTPropertyAttribute(EnumAttributeType.SEND_TO_CLIENT),
+			new NBTPropertyAttribute(EnumAttributeType.DISPLAY_NAME));
+
+	private NBTPropertyInt facingProperty = new NBTPropertyInt("Facing",
+			new NBTPropertyAttribute(EnumAttributeType.SEND_TO_CLIENT),
+			new AttributeLinkedToState<>(BlockContraption.FACING,
+					(state, nbtProperty) -> state.withProperty(
+							BlockContraption.FACING,
+							EnumFacing.getHorizontal(nbtProperty.getIntValue()))));
+
+	private NBTPropertyBoolean activeProperty = new NBTPropertyBoolean("Active",
+			new NBTPropertyAttribute(EnumAttributeType.SEND_TO_CLIENT),
+			new AttributeLinkedToState<>(BlockContraption.ACTIVE));
+
 
 	public void setFacing(EnumFacing facing) {
 		this.facingProperty.setValue(facing.getHorizontalIndex());
@@ -21,6 +36,14 @@ public abstract class TileEntityContraption extends TileEntityCore implements IT
 
 	public EnumFacing getFacing() {
 		return EnumFacing.getHorizontal(this.facingProperty.getValue());
+	}
+
+	public void setActive(boolean active) {
+		this.activeProperty.setValue(active);
+	}
+
+	public boolean isActive() {
+		return this.activeProperty.getValue();
 	}
 
 	// ITileNameable:
@@ -47,9 +70,8 @@ public abstract class TileEntityContraption extends TileEntityCore implements IT
 	// TileEntityCore:
 
 	@Override
-	public void createNBTProperties() {
-		this.addNBTProperty(customNameProperty);
-		this.addNBTProperty(facingProperty);
+	public NBTPropertyContainer createNBTProperties() {
+		return new NBTPropertyContainer(customNameProperty, facingProperty, activeProperty);
 	}
 
 	// End ot TileEntityCore

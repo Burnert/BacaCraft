@@ -7,6 +7,9 @@ public class NBTPropertyHelper {
 
 	public static void readNBTProperty(NBTProperty property, NBTTagCompound compound) {
 		switch (property.getTagType()) {
+			case BOOLEAN:
+				property.setBooleanValue(compound.getBoolean(property.getName()));
+				break;
 			case BYTE:
 				property.setByteValue(compound.getByte(property.getName()));
 				break;
@@ -21,6 +24,9 @@ public class NBTPropertyHelper {
 
 	public static void writeNBTProperty(NBTProperty property, NBTTagCompound compound) {
 		switch (property.getTagType()) {
+			case BOOLEAN:
+				compound.setBoolean(property.getName(), property.getBooleanValue());
+				break;
 			case BYTE:
 				compound.setByte(property.getName(), property.getByteValue());
 				break;

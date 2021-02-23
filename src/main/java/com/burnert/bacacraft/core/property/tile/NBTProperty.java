@@ -1,35 +1,36 @@
 package com.burnert.bacacraft.core.property.tile;
 
 import com.burnert.bacacraft.BacaCraft;
+import com.burnert.bacacraft.core.property.attribute.EnumAttributeType;
+import com.burnert.bacacraft.core.property.attribute.NBTPropertyAttribute;
+import com.burnert.bacacraft.core.property.util.PropertyLinker;
+import com.burnert.bacacraft.core.tile.TileEntityCore;
 import com.google.common.collect.ImmutableSet;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Set;
 
 public abstract class NBTProperty {
 
 	// TODO: Add all the NBT types
 	
-	private final String name;
-	private boolean sendToClient;
-	private boolean persistent;
-	private boolean displayName;
-	protected boolean set;
-
 	public NBTProperty(String name) {
 		this.name = name;
 	}
 
 	public NBTProperty(String name, NBTPropertyAttribute... attributes) {
 		this.name = name;
-		Set<NBTPropertyAttribute> attributeSet = ImmutableSet.copyOf(attributes);
-		this.applyAttributes(attributeSet);
+		this.attributes = ImmutableSet.copyOf(attributes);
 	}
 
 	public static EnumNBTPropertyType getTypeFromId(byte id) {
 		return EnumNBTPropertyType.values()[id];
 	}
 
+	/**
+	 * Checks if the value of this Property has ever been set.
+	 */
 	public boolean isSet() {
 		return this.set;
 	}
@@ -42,28 +43,43 @@ public abstract class NBTProperty {
 	@Nonnull
 	public abstract EnumNBTPropertyType getTagType();
 
-	public boolean shouldSendToClient() {
-		return this.sendToClient;
-	}
-	public void setSendToClient(boolean sendToClient) {
-		this.sendToClient = sendToClient;
-	}
-
-	public boolean isPersistent() {
-		return this.persistent;
-	}
-	public void setPersistent(boolean persistent) {
-		this.persistent = persistent;
+	public void setTileEntity(TileEntityCore entity) {
+		if (this.tileEntity == null) {
+			this.tileEntity = entity;
+		}
+		else {
+			throw new UnsupportedOperationException("Cannot set TileEntity of a Property after it has already been set!");
+		}
 	}
 
-	public boolean isDisplayName() {
-		return this.displayName;
+	protected void updateTileEntity() {
+		if (this.tileEntity != null) {
+			this.tileEntity.markDirty();
+		}
 	}
-	public void setDisplayName(boolean displayName) {
-		this.displayName = displayName;
+
+	// PropertyLinker specific:
+
+	public <T extends Comparable<T>> PropertyLinker<T> getPropertyLinker() {
+		return this.propertyLinker;
+	}
+
+	public <T extends Comparable<T>> void setPropertyLinker(PropertyLinker<T> linker) {
+		if (this.propertyLinker == null) {
+			this.propertyLinker = linker;
+		}
 	}
 
 	// Property Value Getters:
+
+	public boolean getBooleanValue() {
+		if (this.set && this instanceof NBTPropertyBoolean) {
+			return ((NBTPropertyBoolean)this).getValue();
+		}
+		if (this.set)
+			BacaCraft.LOGGER.error("Cannot read property " + this.getName() + " because it is not of type Boolean!");
+		return false;
+	}
 
 	public byte getByteValue() {
 		if (this.set && this instanceof NBTPropertyByte) {
@@ -94,18 +110,25 @@ public abstract class NBTProperty {
 
 	// Property Value Setters:
 
+	public void setBooleanValue(boolean value) {
+		if (this instanceof NBTPropertyBoolean) {
+			((NBTPropertyBoolean)this).setValue(value);
+		}
+		else {
+			throw new UnsupportedOperationException(name + " is not a Boolean!");
+		}
+	}
+
 	public void setByteValue(byte value) {
-		this.set = true;
 		if (this instanceof NBTPropertyByte) {
 			((NBTPropertyByte)this).setValue(value);
 		}
 		else {
-			throw new UnsupportedOperationException(name + " is not an Integer!");
+			throw new UnsupportedOperationException(name + " is not a Byte!");
 		}
 	}
 
 	public void setIntValue(int value) {
-		this.set = true;
 		if (this instanceof NBTPropertyInt) {
 			((NBTPropertyInt)this).setValue(value);
 		}
@@ -115,7 +138,6 @@ public abstract class NBTProperty {
 	}
 
 	public void setStringValue(String value) {
-		this.set = true;
 		if (this instanceof NBTPropertyString) {
 			((NBTPropertyString)this).setValue(value);
 		}
@@ -124,23 +146,26 @@ public abstract class NBTProperty {
 		}
 	}
 
-	private void applyAttributes(Set<NBTPropertyAttribute> attributes) {
-		for (NBTPropertyAttribute attribute : attributes) {
-			switch (attribute) {
-				case SEND_TO_CLIENT:
-					this.setSendToClient(true);
-					break;
-				case PERSISTENT:
-					this.setPersistent(true);
-					break;
-				case DISPLAY_NAME:
-					this.setDisplayName(true);
-					break;
-			}
-		}
+	// Attributes:
+
+	@Nullable
+	public NBTPropertyAttribute getAttribute(EnumAttributeType type) {
+		return this.attributes.stream().filter(attr -> attr.getType().equals(type)).findFirst().orElse(null);
 	}
 
-	public enum NBTPropertyAttribute {
-		SEND_TO_CLIENT, PERSISTENT, DISPLAY_NAME
+	public boolean hasAttribute(EnumAttributeType type) {
+		return this.attributes.stream().anyMatch(attr -> attr.getType().equals(type));
 	}
+
+	// Private Fields:
+
+	private final String name;
+
+	private Set<NBTPropertyAttribute> attributes;
+
+	protected boolean set;
+
+	protected TileEntityCore tileEntity;
+
+	private PropertyLinker propertyLinker;
 }

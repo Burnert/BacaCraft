@@ -2,8 +2,6 @@ package com.burnert.bacacraft.block;
 
 import com.burnert.bacacraft.core.block.BlockTileCore;
 import com.burnert.bacacraft.core.inventory.IGuiProvider;
-import com.burnert.bacacraft.core.tile.ITileNameable;
-import com.burnert.bacacraft.core.tile.TileEntityCore;
 import com.burnert.bacacraft.tile.TileEntityContraption;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;

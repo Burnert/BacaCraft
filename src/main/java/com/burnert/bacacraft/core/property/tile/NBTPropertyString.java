@@ -1,5 +1,7 @@
 package com.burnert.bacacraft.core.property.tile;
 
+import com.burnert.bacacraft.core.property.attribute.NBTPropertyAttribute;
+
 import javax.annotation.Nonnull;
 
 public class NBTPropertyString extends NBTProperty {
@@ -20,6 +22,7 @@ public class NBTPropertyString extends NBTProperty {
 	public void setValue(String value) {
 		this.set = true;
 		this.value = value;
+		this.updateTileEntity();
 	}
 
 	@Nonnull

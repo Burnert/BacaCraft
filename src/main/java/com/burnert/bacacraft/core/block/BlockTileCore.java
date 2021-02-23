@@ -1,13 +1,19 @@
 package com.burnert.bacacraft.core.block;
 
+import com.burnert.bacacraft.core.property.attribute.AttributeLinkedToState;
+import com.burnert.bacacraft.core.property.attribute.EnumAttributeType;
+import com.burnert.bacacraft.core.property.attribute.ILinkedToStateFunction;
 import com.burnert.bacacraft.core.property.tile.NBTProperty;
+import com.burnert.bacacraft.core.property.tile.NBTPropertyContainer;
 import com.burnert.bacacraft.core.property.util.NBTPropertyHelper;
+import com.burnert.bacacraft.core.property.util.PropertyLinker;
 import com.burnert.bacacraft.core.tile.ITileEntityCoreProvider;
 import com.burnert.bacacraft.core.tile.ITileNameable;
 import com.burnert.bacacraft.core.tile.TileEntityCore;
 import com.burnert.bacacraft.core.util.ItemStackHelper;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,6 +40,10 @@ public abstract class BlockTileCore extends BlockCore implements ITileEntityCore
 		super(name, materialIn, blockMapColorIn);
 	}
 
+	public static TileEntityCore tileFromWorld(IBlockAccess world, BlockPos pos) {
+		return (TileEntityCore) world.getTileEntity(pos);
+	}
+
 	// ITileEntityProvider:
 
 	@Nullable
@@ -45,6 +55,39 @@ public abstract class BlockTileCore extends BlockCore implements ITileEntityCore
 	// End of ITileEntityProvider
 
 	// Block:
+
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		TileEntityCore entity = tileFromWorld(worldIn, pos);
+		if (entity != null) {
+			IBlockState newState = state;
+			NBTPropertyContainer propertyContainer = entity.getNBTPropertyContainer();
+
+			for (Map.Entry<String, NBTProperty> entry : propertyContainer) {
+				NBTProperty nbtProperty = entry.getValue();
+
+				AttributeLinkedToState attributeLinkedToState = (AttributeLinkedToState)nbtProperty.getAttribute(EnumAttributeType.LINKED_TO_STATE);
+				if (attributeLinkedToState != null) {
+					if (attributeLinkedToState.hasCustomStateFunction()) {
+						ILinkedToStateFunction function = attributeLinkedToState.getStateFunction();
+						newState = function.updateState(newState, nbtProperty);
+						continue;
+					}
+
+					// TODO: Add the rest
+					switch (nbtProperty.getTagType()) {
+						case BOOLEAN:
+							PropertyLinker<Boolean> linker = nbtProperty.getPropertyLinker();
+							IProperty<Boolean> property = linker.getLinkedProperty();
+							newState = newState.withProperty(property, linker.getPropertyValue());
+							break;
+					}
+				}
+			}
+			return newState;
+		}
+		return state;
+	}
 
 	@Override
 	public boolean hasTileEntity() {
@@ -65,12 +108,12 @@ public abstract class BlockTileCore extends BlockCore implements ITileEntityCore
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 
-		TileEntityCore tileEntityCore = (TileEntityCore) worldIn.getTileEntity(pos);
-		if (tileEntityCore != null) {
-			tileEntityCore.createNBTProperties();
+		TileEntityCore entity = tileFromWorld(worldIn, pos);
+		if (entity != null) {
+			entity.initProperties();
 
-			if (stack.hasDisplayName() && tileEntityCore instanceof ITileNameable) {
-				((ITileNameable)tileEntityCore).setCustomName(stack.getDisplayName());
+			if (stack.hasDisplayName() && entity instanceof ITileNameable) {
+				((ITileNameable)entity).setCustomName(stack.getDisplayName());
 			}
 		}
 	}
@@ -95,10 +138,9 @@ public abstract class BlockTileCore extends BlockCore implements ITileEntityCore
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 		Item item = Item.getItemFromBlock(this);
 		ItemStack stack = new ItemStack(item, 1, this.getMetaFromState(state));
-		ItemStackHelper.lazyInitTagCompound(stack);
 
-		TileEntityCore tileEntityCore = (TileEntityCore) world.getTileEntity(pos);
-		setItemProperties(stack, tileEntityCore);
+		TileEntityCore entity = tileFromWorld(world, pos);
+		setItemProperties(stack, entity);
 
 		drops.add(stack);
 	}
@@ -107,8 +149,8 @@ public abstract class BlockTileCore extends BlockCore implements ITileEntityCore
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
 		ItemStack stack = super.getPickBlock(state, target, world, pos, player);
 
-		TileEntityCore tileEntityCore = (TileEntityCore) world.getTileEntity(pos);
-		setItemProperties(stack, tileEntityCore);
+		TileEntityCore entity = tileFromWorld(world, pos);
+		setItemProperties(stack, entity);
 
 		return stack;
 	}
@@ -117,17 +159,17 @@ public abstract class BlockTileCore extends BlockCore implements ITileEntityCore
 
 	private static void setItemProperties(ItemStack stack, TileEntityCore entity) {
 		if (entity != null) {
-			Map<String, NBTProperty> properties = entity.getNBTProperties();
+			NBTPropertyContainer propertyContainer = entity.getNBTPropertyContainer();
 
-			for (Map.Entry<String, NBTProperty> entry : properties.entrySet()) {
+			for (Map.Entry<String, NBTProperty> entry : propertyContainer) {
 				NBTProperty property = entry.getValue();
 
 				if (property.isSet()) {
-					if (property.isDisplayName()) {
+					if (property.hasAttribute(EnumAttributeType.DISPLAY_NAME)) {
 						ItemStackHelper.setStackDisplayName(stack, property.getStringValue());
 						continue;
 					}
-					if (property.isPersistent()) {
+					if (property.hasAttribute(EnumAttributeType.PERSISTENT)) {
 						NBTPropertyHelper.writeNBTProperty(property, stack.getTagCompound());
 					}
 				}

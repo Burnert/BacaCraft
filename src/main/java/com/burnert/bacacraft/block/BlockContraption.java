@@ -11,6 +11,7 @@ import com.burnert.bacacraft.tile.TileEntitySmokehouse;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -18,8 +19,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -36,7 +39,7 @@ public class BlockContraption extends BlockTileBase {
 	public static final PropertyEnum<Type> TYPE = PropertyEnum.create("type", Type.class);
 
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
-//	public static final PropertyBool ACTIVE = PropertyBool.create("active");
+	public static final PropertyBool ACTIVE = PropertyBool.create("active");
 
 	public static ItemBlockContraption itemBlockContraption;
 
@@ -104,16 +107,7 @@ public class BlockContraption extends BlockTileBase {
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, TYPE, FACING);
-	}
-
-	@Override
-	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		TileEntityContraption entity = (TileEntityContraption) worldIn.getTileEntity(pos);
-		if (entity != null) {
-			return state.withProperty(FACING, entity.getFacing());
-		}
-		return state;
+		return new BlockStateContainer(this, TYPE, FACING, ACTIVE);
 	}
 
 	@Override
@@ -176,6 +170,15 @@ public class BlockContraption extends BlockTileBase {
 	}
 
 	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		TileEntityContraption entity = tileFromWorld(worldIn, pos);
+		if (entity != null) {
+			entity.setActive(!entity.isActive());
+		}
+		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+	}
+
+	@Override
 	public SoundType getSoundType(IBlockState state, World world, BlockPos pos, @Nullable Entity entity) {
 		Type type = state.getValue(TYPE);
 		switch (type) {
@@ -203,10 +206,7 @@ public class BlockContraption extends BlockTileBase {
 		private final Material material;
 
 		Type(int meta, String name) {
-			this.material = Material.WOOD;
-			this.harvestTool = "axe";
-			this.metadata = meta;
-			this.name = name;
+			this(meta, name, Material.WOOD, "axe");
 		}
 
 		Type(int meta, String name, Material mat, String harvestTool) {

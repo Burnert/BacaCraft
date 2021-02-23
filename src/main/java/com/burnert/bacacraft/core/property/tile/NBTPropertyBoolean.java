@@ -4,22 +4,22 @@ import com.burnert.bacacraft.core.property.attribute.NBTPropertyAttribute;
 
 import javax.annotation.Nonnull;
 
-public class NBTPropertyInt extends NBTProperty {
+public class NBTPropertyBoolean extends NBTProperty {
 
-	private int value;
+	private boolean value;
 
-	public NBTPropertyInt(String name) {
+	public NBTPropertyBoolean(String name) {
 		super(name);
 	}
-	public NBTPropertyInt(String name, NBTPropertyAttribute... attributes) {
+	public NBTPropertyBoolean(String name, NBTPropertyAttribute... attributes) {
 		super(name, attributes);
 	}
 
-	public int getValue() {
+	public boolean getValue() {
 		return this.value;
 	}
 
-	public void setValue(int value) {
+	public void setValue(boolean value) {
 		this.set = true;
 		this.value = value;
 		this.updateTileEntity();
@@ -28,6 +28,6 @@ public class NBTPropertyInt extends NBTProperty {
 	@Nonnull
 	@Override
 	public EnumNBTPropertyType getTagType() {
-		return EnumNBTPropertyType.INT;
+		return EnumNBTPropertyType.BOOLEAN;
 	}
 }
