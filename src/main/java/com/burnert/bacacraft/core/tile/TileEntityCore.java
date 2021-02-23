@@ -22,6 +22,10 @@ public abstract class TileEntityCore extends TileEntity {
 
 	public void initProperties() {
 		this.nbtPropertyContainer = this.createNBTProperties();
+		for (Map.Entry<String, NBTProperty> entry : this.nbtPropertyContainer) {
+			NBTProperty property = entry.getValue();
+			property.setTileEntity(this);
+		}
 		this.createPropertyLinkers();
 	}
 
@@ -30,13 +34,10 @@ public abstract class TileEntityCore extends TileEntity {
 	 * Return a {@link NBTPropertyContainer} with all the {@link NBTProperty} objects used in the Entity as parameters.
 	 */
 	public NBTPropertyContainer createNBTProperties() {
-		return null;
+		return NBTPropertyContainer.createEmpty();
 	}
 
 	public NBTPropertyContainer getNBTPropertyContainer() {
-		if (this.nbtPropertyContainer == null) {
-			return NBTPropertyContainer.createEmpty();
-		}
 		return this.nbtPropertyContainer;
 	}
 
