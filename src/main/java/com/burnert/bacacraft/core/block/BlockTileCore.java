@@ -1,8 +1,8 @@
 package com.burnert.bacacraft.core.block;
 
-import com.burnert.bacacraft.core.property.attribute.AttributeLinkedToState;
 import com.burnert.bacacraft.core.property.attribute.EnumAttributeType;
 import com.burnert.bacacraft.core.property.attribute.ILinkedToStateFunction;
+import com.burnert.bacacraft.core.property.attribute.NBTPropertyAttribute;
 import com.burnert.bacacraft.core.property.tile.NBTProperty;
 import com.burnert.bacacraft.core.property.tile.NBTPropertyContainer;
 import com.burnert.bacacraft.core.property.util.NBTPropertyHelper;
@@ -63,11 +63,13 @@ public abstract class BlockTileCore extends BlockCore implements ITileEntityCore
 			NBTPropertyContainer propertyContainer = entity.getNBTPropertyContainer();
 
 			for (NBTProperty nbtProperty : propertyContainer) {
-				AttributeLinkedToState attributeLinkedToState = (AttributeLinkedToState)nbtProperty.getAttribute(EnumAttributeType.LINKED_TO_STATE);
+				NBTPropertyAttribute.LinkedToState attributeLinkedToState =
+						(NBTPropertyAttribute.LinkedToState) nbtProperty.getAttribute(EnumAttributeType.LINKED_TO_STATE);
 				if (attributeLinkedToState != null) {
 					if (attributeLinkedToState.hasCustomStateFunction()) {
 						ILinkedToStateFunction function = attributeLinkedToState.getStateFunction();
-						newState = function.updateState(newState, nbtProperty);
+						IProperty property = attributeLinkedToState.getProperty();
+						newState = newState.withProperty(property, function.updateState(nbtProperty));
 						continue;
 					}
 
@@ -157,6 +159,7 @@ public abstract class BlockTileCore extends BlockCore implements ITileEntityCore
 	private static void setItemProperties(ItemStack stack, TileEntityCore entity) {
 		if (entity != null) {
 			NBTPropertyContainer propertyContainer = entity.getNBTPropertyContainer();
+			if (propertyContainer == null) return; // FIXME: The reason for this line needs further examination...
 
 			for (NBTProperty nbtProperty : propertyContainer) {
 				if (nbtProperty.isSet()) {

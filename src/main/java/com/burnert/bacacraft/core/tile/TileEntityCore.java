@@ -1,7 +1,7 @@
 package com.burnert.bacacraft.core.tile;
 
-import com.burnert.bacacraft.core.property.attribute.AttributeLinkedToState;
 import com.burnert.bacacraft.core.property.attribute.EnumAttributeType;
+import com.burnert.bacacraft.core.property.attribute.NBTPropertyAttribute;
 import com.burnert.bacacraft.core.property.tile.NBTProperty;
 import com.burnert.bacacraft.core.property.tile.NBTPropertyContainer;
 import com.burnert.bacacraft.core.property.util.NBTPropertyHelper;
@@ -49,7 +49,8 @@ public abstract class TileEntityCore extends TileEntity {
 
 	private void createPropertyLinkers() {
 		for (NBTProperty nbtProperty : this.getNBTPropertyContainer()) {
-			AttributeLinkedToState attribute = (AttributeLinkedToState) nbtProperty.getAttribute(EnumAttributeType.LINKED_TO_STATE);
+			NBTPropertyAttribute.LinkedToState attribute =
+					(NBTPropertyAttribute.LinkedToState) nbtProperty.getAttribute(EnumAttributeType.LINKED_TO_STATE);
 			if (attribute != null) {
 				IProperty property = attribute.getProperty();
 				PropertyLinker linker = new PropertyLinker<>(this.getWorld(), this.getPos(), property, nbtProperty);
