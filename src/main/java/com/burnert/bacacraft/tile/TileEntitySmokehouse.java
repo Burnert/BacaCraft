@@ -1,11 +1,19 @@
 package com.burnert.bacacraft.tile;
 
-import com.burnert.bacacraft.BacaCraft;
 import com.burnert.bacacraft.core.inventory.IGuiProvider;
-import com.burnert.bacacraft.core.util.InventoryHelper;
+import com.burnert.bacacraft.core.property.tile.NBTPropertyContainer;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class TileEntitySmokehouse extends TileEntityContraption implements IGuiProvider {
+
+	// TileEntityCore:
+
+	@Override
+	public NBTPropertyContainer createNBTProperties() {
+		return new NBTPropertyContainer(super.createNBTProperties());
+	}
+
+	// End ot TileEntityCore
 
 	// IGuiProvider:
 

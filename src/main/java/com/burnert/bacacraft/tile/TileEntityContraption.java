@@ -14,12 +14,11 @@ public abstract class TileEntityContraption extends TileEntityCore implements IT
 
 	private NBTPropertyString propertyCustomName = new NBTPropertyString("CustomName",
 			new NBTPropertyAttribute.SendToClient(),
-			new NBTPropertyAttribute.DisplayName());
+					new NBTPropertyAttribute.DisplayName());
 
 	private NBTPropertyInt propertyFacing = new NBTPropertyInt("Facing",
 			new NBTPropertyAttribute.SendToClient(),
-			new NBTPropertyAttribute.LinkedToState<>(
-					BlockContraption.FACING,
+			new NBTPropertyAttribute.LinkedToState<>(BlockContraption.FACING,
 					nbtProperty -> EnumFacing.getHorizontal(nbtProperty.getIntValue())));
 
 	private NBTPropertyBoolean propertyActive = new NBTPropertyBoolean("Active",

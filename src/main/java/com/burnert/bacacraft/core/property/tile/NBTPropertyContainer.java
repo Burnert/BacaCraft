@@ -16,6 +16,17 @@ public class NBTPropertyContainer implements Iterable<NBTProperty<?>> {
 		this.nbtProperties = mapBuilder.build();
 	}
 
+	public NBTPropertyContainer(NBTPropertyContainer container, NBTProperty<?>... nbtProperties) {
+		ImmutableMap.Builder<String, NBTProperty<?>> mapBuilder = ImmutableMap.builder();
+		if (container != null) {
+			mapBuilder.putAll(container.nbtProperties);
+		}
+		for (NBTProperty<?> property : nbtProperties) {
+			mapBuilder.put(property.getName(), property);
+		}
+		this.nbtProperties = mapBuilder.build();
+	}
+
 	private NBTPropertyContainer() {
 		this.nbtProperties = ImmutableMap.of();
 	}
