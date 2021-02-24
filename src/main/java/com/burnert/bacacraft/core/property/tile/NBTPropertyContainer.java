@@ -6,11 +6,11 @@ import com.sun.istack.internal.NotNull;
 import java.util.Iterator;
 import java.util.Map;
 
-public class NBTPropertyContainer implements Iterable<NBTProperty> {
+public class NBTPropertyContainer implements Iterable<NBTProperty<?>> {
 
-	public NBTPropertyContainer(NBTProperty... nbtProperties) {
-		ImmutableMap.Builder<String, NBTProperty> mapBuilder = ImmutableMap.builder();
-		for (NBTProperty property : nbtProperties) {
+	public NBTPropertyContainer(NBTProperty<?>... nbtProperties) {
+		ImmutableMap.Builder<String, NBTProperty<?>> mapBuilder = ImmutableMap.builder();
+		for (NBTProperty<?> property : nbtProperties) {
 			mapBuilder.put(property.getName(), property);
 		}
 		this.nbtProperties = mapBuilder.build();
@@ -32,11 +32,11 @@ public class NBTPropertyContainer implements Iterable<NBTProperty> {
 		return this.nbtProperties.getOrDefault(name, null);
 	}
 
-	private final Map<String, NBTProperty> nbtProperties;
+	private final Map<String, NBTProperty<?>> nbtProperties;
 
 	@Override
 	@NotNull
-	public Iterator<NBTProperty> iterator() {
+	public Iterator<NBTProperty<?>> iterator() {
 		return this.nbtProperties.values().iterator();
 	}
 }

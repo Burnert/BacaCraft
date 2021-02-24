@@ -13,7 +13,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import java.util.Map;
 import java.util.Set;
 
 public abstract class TileEntityCore extends TileEntity {
@@ -50,10 +49,10 @@ public abstract class TileEntityCore extends TileEntity {
 
 	private void createPropertyLinkers() {
 		for (NBTProperty nbtProperty : this.getNBTPropertyContainer()) {
-			AttributeLinkedToState<?> linkedToState = (AttributeLinkedToState) nbtProperty.getAttribute(EnumAttributeType.LINKED_TO_STATE);
-			if (linkedToState != null) {
-				IProperty<?> property = linkedToState.getProperty();
-				PropertyLinker<?> linker = new PropertyLinker<>(this.getWorld(), this.getPos(), property, nbtProperty);
+			AttributeLinkedToState attribute = (AttributeLinkedToState) nbtProperty.getAttribute(EnumAttributeType.LINKED_TO_STATE);
+			if (attribute != null) {
+				IProperty property = attribute.getProperty();
+				PropertyLinker linker = new PropertyLinker<>(this.getWorld(), this.getPos(), property, nbtProperty);
 				nbtProperty.setPropertyLinker(linker);
 				propertyLinkers.add(linker);
 			}

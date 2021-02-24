@@ -10,10 +10,10 @@ public class PropertyLinker<T extends Comparable<T>> {
 
 	private final World world;
 	private final BlockPos blockPos;
-	private final NBTProperty nbtProperty;
+	private final NBTProperty<T> nbtProperty;
 	private final IProperty<T> property;
 
-	public PropertyLinker(World world, BlockPos blockPos, IProperty<T> property, NBTProperty nbtProperty) {
+	public PropertyLinker(World world, BlockPos blockPos, IProperty<T> property, NBTProperty<T> nbtProperty) {
 		this.property = property;
 		this.world = world;
 		this.blockPos = blockPos;

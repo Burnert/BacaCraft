@@ -11,16 +11,25 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Set;
 
-public abstract class NBTProperty {
+public abstract class NBTProperty<T extends Comparable<T>> {
 
 	// TODO: Add all the NBT types
 	
 	public NBTProperty(String name) {
-		this.name = name;
+		this(name, new NBTPropertyAttribute[0]);
+	}
+
+	public NBTProperty(String name, T defaultValue) {
+		this(name, defaultValue, new NBTPropertyAttribute[0]);
 	}
 
 	public NBTProperty(String name, NBTPropertyAttribute... attributes) {
+		this(name, null, attributes);
+	}
+
+	public NBTProperty(String name, T defaultValue, NBTPropertyAttribute... attributes) {
 		this.name = name;
+		this.value = defaultValue;
 		this.attributes = ImmutableSet.copyOf(attributes);
 	}
 
@@ -60,17 +69,21 @@ public abstract class NBTProperty {
 
 	// PropertyLinker specific:
 
-	public <T extends Comparable<T>> PropertyLinker<T> getPropertyLinker() {
+	public PropertyLinker<T> getPropertyLinker() {
 		return this.propertyLinker;
 	}
 
-	public <T extends Comparable<T>> void setPropertyLinker(PropertyLinker<T> linker) {
+	public void setPropertyLinker(PropertyLinker<T> linker) {
 		if (this.propertyLinker == null) {
 			this.propertyLinker = linker;
 		}
 	}
 
 	// Property Value Getters:
+
+	public T getValue() {
+		return this.value;
+	}
 
 	public boolean getBooleanValue() {
 		if (this.set && this instanceof NBTPropertyBoolean) {
@@ -109,6 +122,12 @@ public abstract class NBTProperty {
 	}
 
 	// Property Value Setters:
+
+	public void setValue(T value) {
+		this.value = value;
+		this.set = true;
+		this.updateTileEntity();
+	}
 
 	public void setBooleanValue(boolean value) {
 		if (this instanceof NBTPropertyBoolean) {
@@ -161,11 +180,13 @@ public abstract class NBTProperty {
 
 	private final String name;
 
+	protected T value;
+
 	private Set<NBTPropertyAttribute> attributes;
 
 	protected boolean set;
 
 	protected TileEntityCore tileEntity;
 
-	private PropertyLinker propertyLinker;
+	private PropertyLinker<T> propertyLinker;
 }

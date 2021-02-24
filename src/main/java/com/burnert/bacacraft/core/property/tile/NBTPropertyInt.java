@@ -4,25 +4,22 @@ import com.burnert.bacacraft.core.property.attribute.NBTPropertyAttribute;
 
 import javax.annotation.Nonnull;
 
-public class NBTPropertyInt extends NBTProperty {
-
-	private int value;
+public class NBTPropertyInt extends NBTProperty<Integer> {
 
 	public NBTPropertyInt(String name) {
-		super(name);
+		this(name, 0, new NBTPropertyAttribute[0]);
 	}
+
+	public NBTPropertyInt(String name, int defaultValue) {
+		super(name, defaultValue);
+	}
+
 	public NBTPropertyInt(String name, NBTPropertyAttribute... attributes) {
-		super(name, attributes);
+		this(name, 0, attributes);
 	}
 
-	public int getValue() {
-		return this.value;
-	}
-
-	public void setValue(int value) {
-		this.set = true;
-		this.value = value;
-		this.updateTileEntity();
+	public NBTPropertyInt(String name, int defaultValue, NBTPropertyAttribute... attributes) {
+		super(name, defaultValue, attributes);
 	}
 
 	@Nonnull
